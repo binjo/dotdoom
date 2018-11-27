@@ -78,6 +78,7 @@
        ;; sh
        (web +html)
        go
+       lua
 
        ;; :app
        ;; sx
