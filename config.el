@@ -38,6 +38,7 @@
   ;; (when (featurep! :feature org-protocol)
   ;;   (add-to-list 'org-modules 'org-protocol))
   (add-to-list 'org-modules 'org-protocol)
+  (add-to-list 'org-structure-template-alist '("cj" "#+CALL: JSS(\"?\", 123456, t=\"S\")"))
   (setq org-todo-keywords
         '((sequence "TODO(t)" "STARTED(s!)" "LATER(l)" "|" "DONE(d!)" "CANCELLED(c!)")))
   (setq org-directory "~/repos/dotemacs/.emacs.d/org/") ;; FIXME change the directory.
