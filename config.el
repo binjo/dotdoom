@@ -30,6 +30,7 @@
   (setq ns-use-thin-smoothing t)
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark))
+  (setq display-line-numbers-type nil)
   ;; maximize first frame
   (set-frame-parameter nil 'fullscreen 'maximized))
 
