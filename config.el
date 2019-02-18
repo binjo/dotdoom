@@ -39,7 +39,7 @@
     (require 'org-tempo)
     (tempo-define-template
      "call-my-templates"
-     '("#+CALL: " (P "call name: " callee 'noinsert) (s callee) "(\"" p "\", 123456, t=\"S\")")
+     '("#+CALL: " (P "call name: " callee 'noinsert) (s callee) "(\"" p "\")")
      "<k"
      "add call"
      'org-tempo-tags))
