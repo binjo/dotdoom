@@ -49,7 +49,8 @@
   (add-to-list 'org-modules 'org-protocol)
   (setq org-todo-keywords
         '((sequence "TODO(t)" "STARTED(s!)" "LATER(l)" "|" "DONE(d!)" "CANCELLED(c!)")))
-  (setq org-directory "~/repos/dotemacs/.emacs.d/org/") ;; FIXME change the directory.
+  (setq org-directory
+        (expand-file-name "org" doom-private-dir))
   (defvar binjo-org-files
     '("todo.org" "remember.org" "archive.org" "mapp.org" "gcal.org"))
   (dolist (f binjo-org-files)
