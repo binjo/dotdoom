@@ -2,16 +2,12 @@
 ;; 2018.07.18 @ FEYE
 
 ;; * Modules
-(doom! :feature
+(doom! :tools
        ;; debugger
        eval
-       (evil
-        +everywhere)
-       file-templates
        ;; snippets
        ;; spellcheck
-       (syntax-checker +childframe)
-       workspaces
+       (flycheck +childframe)
        lookup
 
        :completion
@@ -24,7 +20,8 @@
        doom
        doom-dashboard
        ;; (doom-modeline +new)
-       doom-modeline
+       modeline
+       workspaces
        hl-todo
        ;; fci
        ;; nav-flash
@@ -36,6 +33,9 @@
         +defaults)
        window-select
        :editor
+       (evil
+        +everywhere)
+       file-templates
        rotate-text
        :emacs
        vc
@@ -43,7 +43,7 @@
        ;; electric
        eshell
        term
-       ediff
+       ;; ediff
        ;; imenu
 
        :tools
