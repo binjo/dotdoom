@@ -11,3 +11,5 @@
            :repo "binjo/yara-mode"))
 
 (package! osx-dictionary)
+
+(package! org-gcal)

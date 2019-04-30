@@ -1,0 +1,11 @@
+# key: rule
+# name: rule
+# expand-env: ((yas-indent-line 'fixed))
+# --
+rule $1
+{
+    strings:
+        $2
+    condition:
+        $3
+}

@@ -11,7 +11,7 @@
   :config
   (progn
     (add-to-list 'auto-mode-alist '("\\.yara" . yara-mode))
-    (add-hook! 'yara-mode-hook #'(doom|enable-delete-trailing-whitespace))))
+    (add-hook! 'yara-mode-hook #'(doom|enable-delete-trailing-whitespace yas-minor-mode-on))))
 
 
 ;;
@@ -51,7 +51,7 @@
         '((sequence "TODO(t)" "STARTED(s!)" "LATER(l)" "|" "DONE(d!)" "CANCELLED(c!)")))
   (setq org-directory "~/repos/dotemacs/.emacs.d/org/") ;; FIXME change the directory.
   (defvar binjo-org-files
-    '("todo.org" "remember.org" "archive.org" "mapp.org"))
+    '("todo.org" "remember.org" "archive.org" "mapp.org" "gcal.org"))
   (dolist (f binjo-org-files)
     (when (file-exists-p (concat org-directory f))
       (add-to-list 'org-agenda-files (concat org-directory f))))
@@ -59,11 +59,17 @@
     #'(turn-on-font-lock toggle-truncate-lines doom|enable-delete-trailing-whitespace))
   (setq org-outline-path-complete-in-steps nil
         org-fast-tag-selection-single-key t)
-  (setq org-agenda-custom-commands
-        '(("w" tags-todo "work")
-          ("d" tags "adobe")
-          ("r" tags "reading"))
+  (setq ;; org-agenda-custom-commands
+        ;; '(("w" tags-todo "work")
+        ;;   ("d" tags "adobe")
+        ;;   ("r" tags "reading"))
         org-agenda-restore-windows-after-quit t)
+  (setq org-agenda-custom-commands
+      '(("W" "Completed and/or deferred tasks from previous week"
+       ((agenda "" ((org-agenda-span 7)
+            (org-agenda-start-day "-7d")
+            (org-agenda-entry-types '(:timestamp))
+            (org-agenda-show-log t)))))))
 
   (setq +org-capture-frame-parameters
         `((name . "org-capture")
@@ -120,6 +126,9 @@
   (map! :leader
         (:desc "dictionary" :prefix "d"
         :desc "Search word at point and display result with buffer" :nv "w" #'osx-dictionary-search-pointer)))
+
+(setq +file-templates-dir
+    (expand-file-name "templates/" (file-name-directory doom-private-dir)))
 
 ;; (add-hook! 'python-mode-hook #'(doom|enable-delete-trailing-whitespace))
 ;; (add-hook 'python-mode-hook 'delete-trailing-whitespace)

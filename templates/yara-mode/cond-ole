@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: cond-ole
+# key: olehdr
+# --
+(uint32(0) == 0xe011cfd0)
+and $1
