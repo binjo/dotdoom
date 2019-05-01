@@ -54,8 +54,8 @@
   (defvar binjo-org-files
     '("todo.org" "remember.org" "archive.org" "mapp.org" "gcal.org"))
   (dolist (f binjo-org-files)
-    (when (file-exists-p (concat org-directory f))
-      (add-to-list 'org-agenda-files (concat org-directory f))))
+    (when (file-exists-p (expand-file-name f org-directory))
+      (add-to-list 'org-agenda-files (expand-file-name f org-directory))))
   (add-hook! 'org-mode-hook
     #'(turn-on-font-lock toggle-truncate-lines doom|enable-delete-trailing-whitespace))
   (setq org-outline-path-complete-in-steps nil
