@@ -41,10 +41,11 @@
        vc
        dired
        ;; electric
-       eshell
-       term
        ;; ediff
        ;; imenu
+       :term
+       eshell
+       term
 
        :tools
        ;; editorconfig
