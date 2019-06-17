@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: cond-rtf
+# key: rtf
+# --
+((uint32(0) == 0x74725c7b) or (uint32(0) == 0x74525c7b) or (uint32(0) == 0x54725c7b) or (uint32(0) == 0x54725c7b))
+and $1
