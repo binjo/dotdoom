@@ -7,7 +7,7 @@
 ;;            :files ("lisp/template.el" "templates")))
 
 (package! yara-mode
-  :recipe (:fetcher github
+  :recipe (:host github
            :repo "binjo/yara-mode"))
 
 (package! osx-dictionary)
