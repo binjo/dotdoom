@@ -57,7 +57,7 @@
     (when (file-exists-p (expand-file-name f org-directory))
       (add-to-list 'org-agenda-files (expand-file-name f org-directory))))
   (add-hook! 'org-mode-hook
-    #'(turn-on-font-lock toggle-truncate-lines doom|enable-delete-trailing-whitespace))
+    #'(turn-on-font-lock toggle-truncate-lines doom-enable-delete-trailing-whitespace-h))
   (setq org-outline-path-complete-in-steps nil
         org-fast-tag-selection-single-key t)
   (setq ;; org-agenda-custom-commands

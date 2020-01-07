@@ -12,8 +12,8 @@
 
        :completion
        (company +auto +childframe)
-       ;; (ivy +childframe)
-       ivy
+       (ivy +childframe +icons)
+       ;; ivy
 
        :ui
        ;; vc-gutter
