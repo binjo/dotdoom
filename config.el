@@ -11,7 +11,7 @@
   :config
   (progn
     (add-to-list 'auto-mode-alist '("\\.yara" . yara-mode))
-    (add-hook! 'yara-mode-hook #'(doom|enable-delete-trailing-whitespace yas-minor-mode-on))))
+    (add-hook! 'yara-mode-hook #'(doom-enable-delete-trailing-whitespace-h yas-minor-mode-on))))
 
 
 ;;
