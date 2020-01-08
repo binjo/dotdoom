@@ -121,6 +121,10 @@
   (setq ivy-count-format "(%d/%d)")
   (setq ivy-use-virtual-buffers t))
 
+(after! ivy-posframe
+  (setf (alist-get t ivy-posframe-display-functions-alist)
+        #'ivy-posframe-display-at-frame-center))
+
 (def-package! osx-dictionary
   :defer t
   :config
