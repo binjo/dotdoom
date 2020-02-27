@@ -6,8 +6,6 @@
        ;; debugger
        eval
        ;; snippets
-       ;; spellcheck
-       (flycheck +childframe)
        lookup
 
        :completion
@@ -74,7 +72,7 @@
         +capture
         +present)
        emacs-lisp
-       javascript
+       ;; javascript
        markdown
        ;; sh
        (web +html)
@@ -91,6 +89,10 @@
        ;;  +osxdict
        ;;  +synosaurus
        ;;  +langtool)
+
+       :checkers
+       ;; spellcheck
+       (syntax +childframe)
 
        :config
        (default +snippets +evil-commands +bindings))
