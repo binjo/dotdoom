@@ -6,7 +6,7 @@
 ;; Plugins
 ;;
 
-(def-package! yara-mode
+(use-package! yara-mode
   :defer t
   :config
   (progn
@@ -125,7 +125,7 @@
   (setf (alist-get t ivy-posframe-display-functions-alist)
         #'ivy-posframe-display-at-frame-center))
 
-(def-package! osx-dictionary
+(use-package! osx-dictionary
   :defer t
   :config
   (map! :leader
