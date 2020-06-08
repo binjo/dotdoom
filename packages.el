@@ -13,3 +13,5 @@
 (package! osx-dictionary)
 
 (package! org-gcal)
+
+(package! org-super-agenda)

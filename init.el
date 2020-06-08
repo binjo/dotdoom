@@ -70,6 +70,7 @@
         +attach
         +babel
         +capture
+        +roam
         +present)
        emacs-lisp
        ;; javascript

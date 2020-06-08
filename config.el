@@ -34,6 +34,15 @@
   ;; maximize first frame
   (set-frame-parameter nil 'fullscreen 'maximized))
 
+(setq +file-templates-dir
+    (expand-file-name "templates/" (file-name-directory doom-private-dir)))
+
+;; set before other settings
+(if (file-directory-p "/Do_Not_Scan")
+    (setq org-directory (expand-file-name "org" "/Do_Not_Scan"))
+  (setq org-directory
+        (expand-file-name "org" doom-private-dir)))
+
 (after! org
   (when (version<= "9.2" (org-version))
     (require 'org-tempo)
@@ -49,13 +58,11 @@
   (add-to-list 'org-modules 'org-protocol)
   (setq org-todo-keywords
         '((sequence "TODO(t)" "STARTED(s!)" "LATER(l)" "|" "DONE(d!)" "CANCELLED(c!)")))
-  (setq org-directory
-        (expand-file-name "org" doom-private-dir))
-  (defvar binjo-org-files
-    '("todo.org" "remember.org" "archive.org" "mapp.org" "gcal.org"))
-  (dolist (f binjo-org-files)
-    (when (file-exists-p (expand-file-name f org-directory))
-      (add-to-list 'org-agenda-files (expand-file-name f org-directory))))
+  ;; (defvar binjo-org-files
+  ;;   '("todo.org" "remember.org" "archive.org" "mapp.org" "gcal.org"))
+  ;; (dolist (f binjo-org-files)
+  ;;   (when (file-exists-p (expand-file-name f org-directory))
+  ;;     (add-to-list 'org-agenda-files (expand-file-name f org-directory))))
   (add-hook! 'org-mode-hook
     #'(turn-on-font-lock toggle-truncate-lines doom-enable-delete-trailing-whitespace-h))
   (setq org-outline-path-complete-in-steps nil
@@ -65,20 +72,20 @@
         ;;   ("d" tags "adobe")
         ;;   ("r" tags "reading"))
         org-agenda-restore-windows-after-quit t)
-  (setq org-agenda-custom-commands
-      '(("W" "Completed and/or deferred tasks from previous week"
-       ((agenda "" ((org-agenda-span 7)
-            (org-agenda-start-day "-7d")
-            (org-agenda-entry-types '(:timestamp))
-            (org-agenda-show-log t)))))))
+  ;; (setq org-agenda-custom-commands
+  ;;     '(("W" "Completed and/or deferred tasks from previous week"
+  ;;      ((agenda "" ((org-agenda-span 7)
+  ;;           (org-agenda-start-day "-7d")
+  ;;           (org-agenda-entry-types '(:timestamp))
+  ;;           (org-agenda-show-log t)))))))
 
   (setq +org-capture-frame-parameters
         `((name . "org-capture")
           (width . 100)
           (height . 20)
           (transient . t)
-          (top . 275)
-          (left . 350)
+          (top . 300)
+          (left . 550)
           (window-system . ,(cond (IS-MAC 'ns)
                                   (IS-LINUX 'x)
                                   (t 'w32)))
@@ -88,7 +95,7 @@
   ;; (defadvice org-capture
   ;;     (after make-full-window-frame activate)
   ;;   "Advise capture to be the only window when used as a popup"
-  ;;   (if (equal "emacs-capture" (frame-parameter nil 'name))
+  ;;   (if (equal "org-capture" (frame-parameter nil 'name))
   ;;       (delete-other-frames)))
 
   ;; (defadvice org-capture-finalize
@@ -115,7 +122,75 @@
            (file+headline "remember.org" "Bookmarks")
            "* %:description%?\n  :TIMESTAMP: %T\n\n%:link\n%:initial"
            :empty-lines 1)))
+
+  (setq my-org-templates-dir
+        (expand-file-name "org" +file-templates-dir))
+  (defun my-new-daily-review ()
+  (interactive)
+  (let ((org-capture-templates '(("d" "Review: Daily Review" entry (file+olp+datetree "/tmp/reviews.org")
+                                  ;; (file @,(expand-file-name "dailyreview.org" my-org-templates-dir))))))
+                                  (file "~/.doom.d/templates/org/dailyreview.org")))))
+    (progn
+      (org-capture nil "d")
+      (org-capture-finalize t)
+      (org-speed-move-safe 'outline-up-heading)
+      (org-narrow-to-subtree)
+      (org-clock-in))))
   )
+
+(use-package! org-super-agenda
+  :after org-agenda
+  ;; :defer t
+  :init
+  (setq org-agenda-skip-scheduled-if-done t
+        org-agenda-skip-deadline-if-done t
+        org-agenda-include-deadlines t
+        org-agenda-block-separator nil
+        org-agenda-compact-blocks t
+        org-agenda-start-day nil ;; i.e. today
+        org-agenda-span 1
+        org-agenda-start-on-weekday nil)
+  (setq org-agenda-custom-commands
+        '(("c" "Super view"
+           ((agenda "" ((org-agenda-overriding-header "")
+                        (org-super-agenda-groups
+                         '((:name "Today"
+                            :time-grid t
+                            :date today
+                            :order 1)))))
+            (alltodo "" ((org-agenda-overriding-header "")
+                         (org-super-agenda-groups
+                          '((:log t)
+                            ;; (:name "To refile"
+                            ;;        :file-path "refile\\.org")
+                            (:name "Important"
+                             :priority "A"
+                             :order 1)
+                            (:name "Due Today"
+                             :deadline today
+                             :order 2)
+                            (:name "Later Todo"
+                             :todo "LATER"
+                             :order 3)
+                            ;; (:name "Today's tasks"
+                            ;;        :file-path "journal/")
+                            (:name "Overdue"
+                             :deadline past
+                             :order 7)
+                            (:name "Meetings"
+                             :and (:todo "MEET" :scheduled future)
+                             :order 10)
+                            (:discard (:not (:todo "TODO")))))))))))
+  :config
+  (org-super-agenda-mode)
+  (map! :leader
+        :map evil-normal-state-map
+        :desc "Super Agenda" "2" #'(lambda ()
+                                   (interactive)
+                                   (org-agenda nil "c"))))
+
+(after! org-oram
+  (setq org-roam-directory (expand-file-name "roam" org-directory)))
 
 (after! ivy
   (setq ivy-count-format "(%d/%d)")
@@ -131,9 +206,6 @@
   (map! :leader
         (:desc "dictionary" :prefix "d"
         :desc "Search word at point and display result with buffer" :nv "w" #'osx-dictionary-search-pointer)))
-
-(setq +file-templates-dir
-    (expand-file-name "templates/" (file-name-directory doom-private-dir)))
 
 ;; (add-hook! 'python-mode-hook #'(doom|enable-delete-trailing-whitespace))
 ;; (add-hook 'python-mode-hook 'delete-trailing-whitespace)
