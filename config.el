@@ -166,19 +166,23 @@
                             (:name "Important"
                              :priority "A"
                              :order 1)
+                            (:name "Work"
+                             :tag ("work" "jira")
+                             :order 2)
                             (:name "Due Today"
                              :deadline today
                              :order 2)
+                            (:name "Scheduled"
+                             :scheduled future
+                             :order e)
                             (:name "Later Todo"
                              :todo "LATER"
                              :order 3)
-                            ;; (:name "Today's tasks"
-                            ;;        :file-path "journal/")
                             (:name "Overdue"
                              :deadline past
                              :order 7)
-                            (:name "Meetings"
-                             :and (:todo "MEET" :scheduled future)
+                            (:name "Life"
+                             :tag ("fin")
                              :order 10)
                             (:discard (:not (:todo "TODO")))))))))))
   :config
