@@ -57,11 +57,12 @@
        ;; upload
        ;; tmux
        ;; password-store
+       lsp
 
        :lang
        ;; lsp
        data
-       (python +lpy +conda)
+       (python +lpy +conda +lsp +pyenv +pipenv)
        ;; ess
        ;; (latex
        ;;  +latexmk
@@ -77,8 +78,9 @@
        markdown
        ;; sh
        (web +html)
-       go
+       (go +lsp)
        lua
+       (cc +lsp)
 
        ;; :app
        ;; sx
