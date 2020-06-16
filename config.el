@@ -103,6 +103,25 @@
   ;;   "Advise capture-finalize to close the frame"
   ;;   (when (equal "org-capture" (frame-parameter nil 'name))
   ;;       (delete-frame nil t)))
+  ;; https://emacs-china.org/t/emacs-mac-org-capture-emacs/13453
+  (defun osx-switch-back-to-previous-application ()
+    "Switch back to previous application on macOS."
+    (interactive)
+    (do-applescript
+     (mapconcat
+      #'identity
+      '("tell application \"System Events\""
+        "  tell process \"Finder\""
+        "    activate"
+        "    keystroke tab using {command down}"
+        "  end tell"
+        "end tell")
+      "\n")))
+
+  (defun org-capture-finalize@after (&rest r)
+      (when (equal "o" (plist-get org-capture-plist :key))
+          (run-at-time 0 nil #'osx-switch-back-to-previous-application)))
+  (advice-add #'org-capture-finalize :after  #'org-capture-finalize@after)
 
   (setq org-capture-templates
         '(("n" "ToDo" entry
@@ -123,19 +142,19 @@
            "* %:description%?\n  :TIMESTAMP: %T\n\n%:link\n%:initial"
            :empty-lines 1)))
 
-  (setq my-org-templates-dir
-        (expand-file-name "org" +file-templates-dir))
-  (defun my-new-daily-review ()
-  (interactive)
-  (let ((org-capture-templates '(("d" "Review: Daily Review" entry (file+olp+datetree "/tmp/reviews.org")
-                                  ;; (file @,(expand-file-name "dailyreview.org" my-org-templates-dir))))))
-                                  (file "~/.doom.d/templates/org/dailyreview.org")))))
-    (progn
-      (org-capture nil "d")
-      (org-capture-finalize t)
-      (org-speed-move-safe 'outline-up-heading)
-      (org-narrow-to-subtree)
-      (org-clock-in))))
+  ;; (setq my-org-templates-dir
+  ;;       (expand-file-name "org" +file-templates-dir))
+  ;; (defun my-new-daily-review ()
+  ;;   (interactive)
+  ;;   (let ((org-capture-templates '(("d" "Review: Daily Review" entry (file+olp+datetree "/tmp/reviews.org")
+  ;;                                   ;; (file @,(expand-file-name "dailyreview.org" my-org-templates-dir))))))
+  ;;                                   (file "~/.doom.d/templates/org/dailyreview.org")))))
+  ;;     (progn
+  ;;       (org-capture nil "d")
+  ;;       (org-capture-finalize t)
+  ;;       (org-speed-move-safe 'outline-up-heading)
+  ;;       (org-narrow-to-subtree)
+  ;;       (org-clock-in))))
   )
 
 (use-package! org-super-agenda
