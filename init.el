@@ -81,6 +81,7 @@
        (go +lsp)
        lua
        (cc +lsp)
+       (rust +lsp)
 
        ;; :app
        ;; sx
