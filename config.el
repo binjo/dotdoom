@@ -35,7 +35,7 @@
   (set-frame-parameter nil 'fullscreen 'maximized))
 
 (setq +file-templates-dir
-    (expand-file-name "templates/" (file-name-directory doom-private-dir)))
+      (expand-file-name "templates/" (file-name-directory doom-private-dir)))
 
 ;; set before other settings
 (if (file-directory-p "/Do_Not_Scan")
@@ -64,20 +64,20 @@
   ;;   (when (file-exists-p (expand-file-name f org-directory))
   ;;     (add-to-list 'org-agenda-files (expand-file-name f org-directory))))
   (add-hook! 'org-mode-hook
-    #'(turn-on-font-lock toggle-truncate-lines doom-enable-delete-trailing-whitespace-h))
+             #'(turn-on-font-lock toggle-truncate-lines doom-enable-delete-trailing-whitespace-h))
   (setq org-outline-path-complete-in-steps nil
         org-fast-tag-selection-single-key t)
   (setq ;; org-agenda-custom-commands
-        ;; '(("w" tags-todo "work")
-        ;;   ("d" tags "adobe")
-        ;;   ("r" tags "reading"))
-        org-agenda-restore-windows-after-quit t)
-  ;; (setq org-agenda-custom-commands
-  ;;     '(("W" "Completed and/or deferred tasks from previous week"
-  ;;      ((agenda "" ((org-agenda-span 7)
-  ;;           (org-agenda-start-day "-7d")
-  ;;           (org-agenda-entry-types '(:timestamp))
-  ;;           (org-agenda-show-log t)))))))
+   ;; '(("w" tags-todo "work")
+   ;;   ("d" tags "adobe")
+   ;;   ("r" tags "reading"))
+   org-agenda-restore-windows-after-quit t)
+  (setq org-agenda-custom-commands
+        '(("W" "Completed and/or deferred tasks from previous week"
+           ((agenda "" ((org-agenda-span 7)
+                        (org-agenda-start-day "-7d")
+                        (org-agenda-entry-types '(:timestamp))
+                        (org-agenda-show-log t)))))))
 
   (setq +org-capture-frame-parameters
         `((name . "org-capture")
@@ -119,8 +119,8 @@
       "\n")))
 
   (defun org-capture-finalize@after (&rest r)
-      (when (equal "o" (plist-get org-capture-plist :key))
-          (run-at-time 0 nil #'osx-switch-back-to-previous-application)))
+    (when (equal "o" (plist-get org-capture-plist :key))
+      (run-at-time 0 nil #'osx-switch-back-to-previous-application)))
   (advice-add #'org-capture-finalize :after  #'org-capture-finalize@after)
 
   (setq org-capture-templates
@@ -155,6 +155,12 @@
   ;;       (org-speed-move-safe 'outline-up-heading)
   ;;       (org-narrow-to-subtree)
   ;;       (org-clock-in))))
+  (map! :leader
+        :map evil-normal-state-map
+        :desc "Weekly Review" "1" #'(lambda ()
+                                      (interactive)
+                                      (org-agenda nil "W"))
+        )
   )
 
 (use-package! org-super-agenda
@@ -169,48 +175,49 @@
         org-agenda-start-day nil ;; i.e. today
         org-agenda-span 1
         org-agenda-start-on-weekday nil)
-  (setq org-agenda-custom-commands
-        '(("c" "Super view"
-           ((agenda "" ((org-agenda-overriding-header "")
-                        (org-super-agenda-groups
-                         '((:name "Today"
-                            :time-grid t
-                            :date today
-                            :order 1)))))
-            (alltodo "" ((org-agenda-overriding-header "")
-                         (org-super-agenda-groups
-                          '((:log t)
-                            ;; (:name "To refile"
-                            ;;        :file-path "refile\\.org")
-                            (:name "Important"
-                             :priority "A"
-                             :order 1)
-                            (:name "Work"
-                             :tag ("work" "jira")
-                             :order 2)
-                            (:name "Due Today"
-                             :deadline today
-                             :order 2)
-                            (:name "Scheduled"
-                             :scheduled future
-                             :order e)
-                            (:name "Later Todo"
-                             :todo "LATER"
-                             :order 3)
-                            (:name "Overdue"
-                             :deadline past
-                             :order 7)
-                            (:name "Life"
-                             :tag ("fin")
-                             :order 10)
-                            (:discard (:not (:todo "TODO")))))))))))
+  (add-to-list 'org-agenda-custom-commands
+               '("c" "Super view"
+                 ((agenda "" ((org-agenda-overriding-header "")
+                              (org-super-agenda-groups
+                               '((:name "Today"
+                                  :time-grid t
+                                  :date today
+                                  :order 1)))))
+                  (alltodo "" ((org-agenda-overriding-header "")
+                               (org-super-agenda-groups
+                                '((:log t)
+                                  ;; (:name "To refile"
+                                  ;;        :file-path "refile\\.org")
+                                  (:name "Important"
+                                   :priority "A"
+                                   :order 1)
+                                  (:name "Work"
+                                   :tag ("work" "jira")
+                                   :order 2)
+                                  (:name "Due Today"
+                                   :deadline today
+                                   :order 2)
+                                  (:name "Scheduled"
+                                   :scheduled future
+                                   :order e)
+                                  (:name "Later Todo"
+                                   :todo "LATER"
+                                   :order 3)
+                                  (:name "Overdue"
+                                   :deadline past
+                                   :order 7)
+                                  (:name "Life"
+                                   :tag ("fin")
+                                   :order 10)
+                                  (:discard (:not (:todo "TODO"))))))))))
   :config
   (org-super-agenda-mode)
   (map! :leader
         :map evil-normal-state-map
         :desc "Super Agenda" "2" #'(lambda ()
-                                   (interactive)
-                                   (org-agenda nil "c"))))
+                                     (interactive)
+                                     (org-agenda nil "c"))
+        ))
 
 (after! org-oram
   (setq org-roam-directory (expand-file-name "roam" org-directory)))
@@ -228,7 +235,7 @@
   :config
   (map! :leader
         (:desc "dictionary" :prefix "d"
-        :desc "Search word at point and display result with buffer" :nv "w" #'osx-dictionary-search-pointer)))
+         :desc "Search word at point and display result with buffer" :nv "w" #'osx-dictionary-search-pointer)))
 
 ;; (add-hook! 'python-mode-hook #'(doom|enable-delete-trailing-whitespace))
 ;; (add-hook 'python-mode-hook 'delete-trailing-whitespace)
