@@ -19,6 +19,7 @@
 ;;
 
 (setq
+ fill-column 160
  doom-line-numbers-style nil
  doom-localleader-key ","
  +default-repeat-forward-key ";"
