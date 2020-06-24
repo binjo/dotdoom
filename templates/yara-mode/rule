@@ -1,6 +1,6 @@
 # key: rule
 # name: rule
-# expand-env: ((yas-indent-line 'fixed))               
+# expand-env: ((yas-indent-line 'fixed))
 # --
 rule $1
 {
