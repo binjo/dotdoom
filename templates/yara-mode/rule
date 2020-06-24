@@ -1,9 +1,12 @@
 # key: rule
 # name: rule
-# expand-env: ((yas-indent-line 'fixed))
+# expand-env: ((yas-indent-line 'fixed))               
 # --
 rule $1
 {
+    meta:
+        date_created = "`(format-time-string "%Y-%m-%d")`"
+        date_modified = "`(format-time-string "%Y-%m-%d")`"
     strings:
         $2
     condition:
