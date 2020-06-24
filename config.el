@@ -91,12 +91,12 @@
                                   (t 'w32)))
           ,(if IS-LINUX '(display . ":0"))))
 
-  ;; ;; http://cestdiego.github.io/blog/2015/08/19/org-protocol/
-  ;; (defadvice org-capture
-  ;;     (after make-full-window-frame activate)
-  ;;   "Advise capture to be the only window when used as a popup"
-  ;;   (if (equal "org-capture" (frame-parameter nil 'name))
-  ;;       (delete-other-frames)))
+  ;; http://cestdiego.github.io/blog/2015/08/19/org-protocol/
+  (defadvice org-capture
+      (after make-full-window-frame activate)
+    "Advise capture to be the only window when used as a popup"
+    (if (equal "org-capture" (frame-parameter nil 'name))
+        (delete-other-windows)))
 
   ;; (defadvice org-capture-finalize
   ;;     (after delete-capture-frame activate)
