@@ -72,7 +72,8 @@
         +babel
         +capture
         +roam
-        +present)
+        +present
+        +pretty)
        emacs-lisp
        ;; javascript
        markdown
