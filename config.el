@@ -19,6 +19,7 @@
 ;;
 
 (setq
+ fancy-splash-image "~/.doom.d/black-hole.png"
  doom-line-numbers-style nil
  doom-localleader-key ","
  +default-repeat-forward-key ";"
