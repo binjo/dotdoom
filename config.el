@@ -7,12 +7,11 @@
 ;;
 
 (use-package! yara-mode
-  :defer t
+  :after yasnippet
+  :load-path "~/repos/yara-mode"
+  :mode "\\.yara"
   :config
-  (progn
-    (add-to-list 'auto-mode-alist '("\\.yara" . yara-mode))
-    (add-hook! 'yara-mode-hook #'(doom-enable-delete-trailing-whitespace-h yas-minor-mode-on))))
-
+  (add-hook! 'yara-mode-hook #'(doom-enable-delete-trailing-whitespace-h yas-minor-mode-on)))
 
 ;;
 ;; Config
@@ -248,6 +247,9 @@
 ;;   #'(global-display-line-numbers-mode -1))
 
 ;; (global-display-line-numbers-mode -1)
+
+(use-package! ivy-avy
+  :after ivy)
 
 (provide 'config)
 ;;; config.el ends here

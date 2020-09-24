@@ -24,7 +24,7 @@
        ;; fci
        ;; nav-flash
        ;; neotree
-       ;; treemacs
+       treemacs
        ;; pretty-code
        (popup
         +all
@@ -45,11 +45,13 @@
        eshell
        term
 
+       :os
+        macos
+
        :tools
        ;; editorconfig
        ;; ein
        gist
-       macos
        ;; make
        magit
        ;; rgb
@@ -62,7 +64,7 @@
        :lang
        ;; lsp
        data
-       (python +lpy +conda +lsp +pyenv +pipenv)
+       (python +conda +lsp +pyenv +pipenv +pyright)
        ;; ess
        ;; (latex
        ;;  +latexmk
@@ -100,4 +102,6 @@
        (syntax +childframe)
 
        :config
-       (default +snippets +evil-commands +bindings))
+       (default +evil +bindings)
+       ;; literate
+       )
