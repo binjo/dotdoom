@@ -251,5 +251,26 @@
 (use-package! ivy-avy
   :after ivy)
 
+(use-package! rime
+  :init
+  (setq rime-librime-root "~/.local/librime/dist")
+  (setq rime-user-data-dir (file-truename "~/Library/Rime"))
+  :after-call after-find-file pre-command-hook
+  :custom
+  (default-input-method "rime")
+  (rime-show-candidate 'posframe)
+  :config
+  (defadvice! +rime--posframe-display-result-a (args)
+    "给 `rime--posframe-display-result' 传入的字符串加一个全角空
+格，以解决 `posframe' 偶尔吃字的问题。"
+    :filter-args #'rime--posframe-display-result
+    (cl-destructuring-bind (result) args
+      (let ((newresult (if (string-blank-p result)
+                           result
+                         (concat result "　"))))
+        (list newresult))))
+
+  (load! "+rime-probe-english"))
+
 (provide 'config)
 ;;; config.el ends here
