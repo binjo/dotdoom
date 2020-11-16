@@ -55,9 +55,9 @@
     (if (derived-mode-p 'telega-chat-mode)
         (setq use-en (or use-en
                          (+rime--probe-auto-english)))
-      (when (derived-mode-p 'text-mode)
-        (setq use-en (or use-en
-                         (+rime--probe-auto-english))))
+      ;; (when (derived-mode-p 'text-mode)
+      ;;   (setq use-en (or use-en
+      ;;                    (+rime--probe-auto-english))))
       (when (derived-mode-p 'prog-mode 'conf-mode)
         (setq use-en (or use-en
                          (rime--after-alphabet-char-p))))
