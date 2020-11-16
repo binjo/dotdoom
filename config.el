@@ -63,6 +63,10 @@
   ;; (dolist (f binjo-org-files)
   ;;   (when (file-exists-p (expand-file-name f org-directory))
   ;;     (add-to-list 'org-agenda-files (expand-file-name f org-directory))))
+  (if (file-directory-p org-roam-directory)
+      (add-to-list 'org-agenda-files org-roam-directory))
+  (if (file-directory-p (expand-file-name "daily" org-roam-directory))
+      (add-to-list 'org-agenda-files (expand-file-name "daily" org-roam-directory)))
   (add-hook! 'org-mode-hook
              #'(turn-on-font-lock toggle-truncate-lines doom-enable-delete-trailing-whitespace-h))
   (setq org-outline-path-complete-in-steps nil
