@@ -233,7 +233,8 @@
   (map! :map org-mode-map
         :localleader
         (:prefix ("r" . "refile")
-         "f" #'binjo/refile-to-roam-file)))
+         "f" #'binjo/refile-to-roam-file
+         "F" #'binjo/refile-to-roam-today-file)))
 
 (after! ivy
   (setq ivy-count-format "(%d/%d)")

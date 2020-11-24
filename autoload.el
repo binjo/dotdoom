@@ -136,4 +136,14 @@
                               nil org-directory)))
   (+org/refile-to-current-file arg file))
 
+(defun binjo/refile-to-roam-today-file (arg file)
+  "Refile current heading to org roam today file."
+  (interactive
+   (list current-prefix-arg
+         (expand-file-name (format-time-string "%Y-%m-%d.org")
+                           (concat
+                            (file-name-as-directory org-roam-directory)
+                            org-roam-dailies-directory))))
+  (+org/refile-to-current-file arg file))
+
 ;;; autoload.el ends here
