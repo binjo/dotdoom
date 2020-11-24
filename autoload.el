@@ -125,6 +125,15 @@
          "[+] Done, check it out...")
     "[-] shit, length even? ...")))
 
-
+;;;###autoload
+(defun binjo/refile-to-roam-file (arg file)
+  "Refile current heading to a particular org roam file."
+  (interactive
+   (list current-prefix-arg
+         (ivy-completing-read "Select file to refile to: "
+                              'read-file-name-internal
+                              'file-exists-p
+                              nil org-directory)))
+  (+org/refile-to-current-file arg file))
 
 ;;; autoload.el ends here

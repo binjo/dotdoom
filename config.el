@@ -223,8 +223,17 @@
                                      (org-agenda nil "c"))
         ))
 
-(after! org-oram
-  (setq org-roam-directory (expand-file-name "roam" org-directory)))
+(after! org-roam
+  (setq org-roam-directory (expand-file-name "roam" org-directory))
+  (setq org-roam-dailies-capture-templates
+        '(("d" "default" entry (function org-roam-capture--get-point)
+           "* %?"
+           :file-name "daily/%<%Y-%m-%d>"
+           :head "# -*- fill-column: 140; -*-\n#+TITLE: %<%Y-%m-%d>\n")))
+  (map! :map org-mode-map
+        :localleader
+        (:prefix ("r" . "refile")
+         "f" #'binjo/refile-to-roam-file)))
 
 (after! ivy
   (setq ivy-count-format "(%d/%d)")
