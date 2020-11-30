@@ -16,6 +16,4 @@
 
 (package! org-super-agenda)
 
-(package! ivy-avy)
-
 (package! rime)

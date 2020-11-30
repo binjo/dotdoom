@@ -262,9 +262,6 @@
 
 ;; (global-display-line-numbers-mode -1)
 
-(use-package! ivy-avy
-  :after ivy)
-
 (use-package! rime
   :init
   (setq rime-librime-root "~/.local/librime/dist")
