@@ -68,7 +68,10 @@
   (if (file-directory-p (expand-file-name "daily" org-roam-directory))
       (add-to-list 'org-agenda-files (expand-file-name "daily" org-roam-directory)))
   (add-hook! 'org-mode-hook
-             #'(turn-on-font-lock toggle-truncate-lines doom-enable-delete-trailing-whitespace-h))
+             #'(turn-on-font-lock
+                toggle-truncate-lines
+                doom-enable-delete-trailing-whitespace-h
+                visual-line-mode))
   (setq org-outline-path-complete-in-steps nil
         org-fast-tag-selection-single-key t)
   (setq ;; org-agenda-custom-commands
