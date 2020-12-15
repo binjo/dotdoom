@@ -85,6 +85,7 @@
        lua
        (cc +lsp)
        (rust +lsp)
+       (java +lsp)
 
        ;; :app
        ;; sx
