@@ -10,7 +10,7 @@
 
        :completion
        (company +auto +childframe)
-       (ivy +childframe +icons)
+       (ivy +childframe +icons +prescient)
        ;; ivy
 
        :ui
@@ -86,6 +86,7 @@
        (cc +lsp)
        (rust +lsp)
        (java +lsp)
+       (csharp +lsp)
 
        ;; :app
        ;; sx
