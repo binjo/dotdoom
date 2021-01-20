@@ -24,7 +24,9 @@
  +default-repeat-forward-key ";"
  +default-repeat-backward-key "'"
  doom-large-file-size 10
- doom-font (font-spec :family "Source Code Pro" :size 14))
+ doom-font (font-spec :family "Source Code Pro" :size 14)
+ doom-unicode-font (font-spec :family "WenQuanYi Zen Hei Mono" :size 14)
+ doom-unicode-extra-fonts nil)
 
 (when IS-MAC
   (setq ns-use-thin-smoothing t)
