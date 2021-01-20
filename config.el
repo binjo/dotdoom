@@ -231,10 +231,11 @@
 (after! org-roam
   (setq org-roam-directory (expand-file-name "roam" org-directory))
   (setq org-roam-dailies-capture-templates
-        '(("d" "default" entry (function org-roam-capture--get-point)
-           "* %?"
+        '(("d" "default" entry #'org-roam-capture--get-point "* %?"
            :file-name "daily/%<%Y-%m-%d>"
-           :head "# -*- fill-column: 140; -*-\n#+TITLE: %<%Y-%m-%d>\n")))
+           :head "#+TITLE: %<%Y-%m-%d>\n#+ROAM_TAGS: daily\n\n* Clear TODOs\n\n"
+           :unnarrowed t
+           :empty-lines 1)))
   (map! :map org-mode-map
         :localleader
         (:prefix ("r" . "refile")
