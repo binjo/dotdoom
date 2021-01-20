@@ -233,7 +233,7 @@
   (setq org-roam-dailies-capture-templates
         '(("d" "default" entry #'org-roam-capture--get-point "* %?"
            :file-name "daily/%<%Y-%m-%d>"
-           :head "#+TITLE: %<%Y-%m-%d>\n#+ROAM_TAGS: daily\n\n* Clear TODOs\n\n"
+           :head "#+title: %<%Y-%m-%d>\n#+roam_tags: daily\n\n* Clear TODOs\n\n"
            :unnarrowed t
            :empty-lines 1)))
   (map! :map org-mode-map
