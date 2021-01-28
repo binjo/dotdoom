@@ -252,12 +252,12 @@
   (setf (alist-get t ivy-posframe-display-functions-alist)
         #'ivy-posframe-display-at-frame-center))
 
-(use-package! osx-dictionary
-  :defer t
-  :config
-  (map! :leader
-        (:desc "dictionary" :prefix "d"
-         :desc "Search word at point and display result with buffer" :nv "w" #'osx-dictionary-search-pointer)))
+;; (use-package! osx-dictionary
+;;   :defer t
+;;   :config
+;;   (map! :leader
+;;         (:desc "dictionary" :prefix "d"
+;;          :desc "Search word at point and display result with buffer" :nv "w" #'osx-dictionary-search-pointer)))
 
 ;; (add-hook! 'python-mode-hook #'(doom|enable-delete-trailing-whitespace))
 ;; (add-hook 'python-mode-hook 'delete-trailing-whitespace)
