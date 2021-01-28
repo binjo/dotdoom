@@ -291,5 +291,14 @@
 
   (load! "+rime-probe-english"))
 
+(set-email-account! "binjo"
+  '((mu4e-sent-folder       . "/sent")
+    (mu4e-drafts-folder     . "/drafts")
+    (mu4e-trash-folder      . "/trash")
+    ;; (mu4e-refile-folder     . "/personal/All Mail")
+    (smtpmail-smtp-user     . "binjo.cn@gmail.com")
+    (user-mail-address      . "binjo.cn@gmail.com")    ;; only needed for mu < 1.4
+    (mu4e-compose-signature . "---\nbinjo"))
+  t)
 (provide 'config)
 ;;; config.el ends here

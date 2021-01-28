@@ -92,7 +92,9 @@
        ;; sx
        ;; rss
        ;; ;; twitter
-       ;; email
+       :email
+       (mu4e
+        +gmail)
        ;; (write
        ;;  +wordnut
        ;;  +osxdict
