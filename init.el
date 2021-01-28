@@ -7,6 +7,7 @@
        eval
        ;; snippets
        lookup
+       pdf
 
        :completion
        (company +auto +childframe)
@@ -74,6 +75,7 @@
         +babel
         +capture
         +roam
+        +noter
         +present
         +pretty)
        emacs-lisp
