@@ -240,7 +240,9 @@
         :localleader
         (:prefix ("r" . "refile")
          "f" #'binjo/refile-to-roam-file
-         "F" #'binjo/refile-to-roam-today-file)))
+         "F" #'binjo/refile-to-roam-today-file)
+        (:prefix ("m" . "org-roam")
+         "a" #'org-roam-alias-add)))
 
 (after! ivy
   (setq ivy-count-format "(%d/%d)")
