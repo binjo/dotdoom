@@ -300,5 +300,9 @@
     (user-mail-address      . "binjo.cn@gmail.com")    ;; only needed for mu < 1.4
     (mu4e-compose-signature . "---\nbinjo"))
   t)
+
+(map! :leader
+      :desc "M-x" "SPC" 'counsel-M-x)
+
 (provide 'config)
 ;;; config.el ends here
