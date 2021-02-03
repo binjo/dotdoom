@@ -53,7 +53,8 @@
      '("#+CALL: " (P "call name: " callee 'noinsert) (s callee) "(\"" p "\")")
      "<k"
      "add call"
-     'org-tempo-tags))
+     'org-tempo-tags)
+    (add-to-list 'org-tempo-keywords-alist '("0" . "roam_alias")))
   (add-to-list 'org-agenda-text-search-extra-files 'agenda-archives)
   ;; (when (featurep! :feature org-protocol)
   ;;   (add-to-list 'org-modules 'org-protocol))
