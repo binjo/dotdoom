@@ -105,7 +105,7 @@
 
        :checkers
        ;; spellcheck
-       (syntax +childframe)
+       ;; (syntax +childframe)
 
        :config
        (default +evil +bindings)
