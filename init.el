@@ -10,7 +10,7 @@
        pdf
 
        :completion
-       (company +auto +childframe)
+       ;; (company +auto +childframe)
        (ivy +childframe +icons +prescient)
        ;; ivy
 
