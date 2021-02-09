@@ -47,7 +47,7 @@
        term
 
        :os
-        macos
+       macos
 
        :tools
        ;; editorconfig

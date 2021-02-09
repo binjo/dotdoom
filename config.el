@@ -305,5 +305,8 @@
 (map! :leader
       :desc "M-x" "SPC" 'counsel-M-x)
 
+(after! evil-snipe
+  (setq evil-snipe-scope 'buffer))
+
 (provide 'config)
 ;;; config.el ends here
