@@ -302,6 +302,25 @@
     (mu4e-compose-signature . "---\nbinjo"))
   t)
 
+(use-package! mu4e-thread-folding
+  :config
+  (add-to-list 'mu4e-header-info-custom
+               '(:empty . (:name "Empty"
+                           :shortname ""
+                           :function (lambda (msg) "  "))))
+  (setq mu4e-headers-fields '((:empty         .    2)
+                              (:human-date    .   12)
+                              (:flags         .    6)
+                              (:mailing-list  .   10)
+                              (:from          .   22)
+                              (:subject       .   nil)))
+  (map! :map mu4e-headers-mode-map
+        ("<tab>" #'mu4e-headers-toggle-at-point
+         "<left>" #'mu4e-headers-fold-at-point
+         "<S-left>" #'mu4e-headers-fold-all
+         "<right>" #'mu4e-headers-unfold-at-point
+         "<S-right>" #'mu4e-headers-unfold-all)))
+
 (map! :leader
       :desc "M-x" "SPC" 'counsel-M-x)
 
