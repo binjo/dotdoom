@@ -241,7 +241,8 @@
         :localleader
         (:prefix ("r" . "refile")
          "f" #'binjo/refile-to-roam-file
-         "F" #'binjo/refile-to-roam-today-file)
+         "F" #'binjo/refile-to-roam-today-file
+         "C" #'binjo/refile-from-headline)
         (:prefix ("m" . "org-roam")
          "a" #'org-roam-alias-add)))
 

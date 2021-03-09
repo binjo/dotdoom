@@ -147,4 +147,27 @@
                             org-roam-dailies-directory))))
   (+org/refile-to-current-file arg file))
 
+;; copy&renamed from https://github.com/telotortium/doom.d/blob/f0295cc510d31c813e2a61ab2fc4aad3ae531e49/org-config.el#L1250-L1271
+;; let user decide if certain part should be stripped
+;;;###autoload
+(defun binjo/refile-from-headline ()
+  "Create an Org-roam note from the current headline and jump to it.
+Normally, insert the headline’s title using the ’#title:’ file-level property
+and delete the Org-mode headline. However, if the current headline has a
+Org-mode properties drawer already, keep the headline and don’t insert
+‘#+title:'. Org-roam can extract the title from both kinds of notes, but using
+‘#+title:’ is a bit cleaner for a short note, which Org-roam encourages."
+  (interactive)
+  (let ((title (nth 4 (org-heading-components)))
+        (has-properties (org-get-property-block)))
+    (org-cut-subtree)
+    (org-roam-find-file title nil nil 'no-confirm)
+    (org-paste-subtree)
+    (unless has-properties
+      ;; (kill-line)
+      (while (outline-next-heading)
+        (org-promote)))
+    (goto-char (point-min))
+    (outline-next-heading)))
+
 ;;; autoload.el ends here
