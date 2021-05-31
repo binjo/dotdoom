@@ -137,6 +137,15 @@
   (+org/refile-to-current-file arg file))
 
 ;;;###autoload
+(defun binjo/refile-to-roam-file-2 (arg file)
+  "Refile current heading to org roam file."
+  (interactive
+   (list current-prefix-arg
+         (plist-get (cdr (assoc (org-roam-completion--completing-read "File: " (org-roam--get-title-path-completions))
+                                (org-roam--get-title-path-completions))) :path)))
+  (+org/refile-to-current-file arg file))
+
+;;;###autoload
 (defun binjo/refile-to-roam-today-file (arg file)
   "Refile current heading to org roam today file."
   (interactive
