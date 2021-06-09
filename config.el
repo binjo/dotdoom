@@ -329,5 +329,8 @@
 (after! evil-snipe
   (setq evil-snipe-scope 'buffer))
 
+(custom-set-faces!
+  '(bookmark-face :background nil :foreground nil))
+
 (provide 'config)
 ;;; config.el ends here
