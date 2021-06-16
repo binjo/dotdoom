@@ -332,5 +332,7 @@
 (custom-set-faces!
   '(bookmark-face :background nil :foreground nil))
 
+(advice-add #'company-ispell :around #'doom-shut-up-a)
+
 (provide 'config)
 ;;; config.el ends here
