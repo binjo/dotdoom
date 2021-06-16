@@ -10,7 +10,9 @@
    :desc "recenter" :nv "l" #'recenter
    (:desc "code" :prefix "c"
      :desc "Clear flycheck warnings" :n "C" #'flycheck-clear
-     :desc "Comment DWIM" :n "l" #'comment-dwim)))
+     :desc "Comment DWIM" :n "l" #'comment-dwim)
+   (:desc "search" :prefix "s"
+    :desc "Search via rg" :n "g" #'counsel-rg)))
 
 
 (provide '+bindings)
