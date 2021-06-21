@@ -22,3 +22,5 @@
   (package! mu4e-thread-folding
     :recipe (:host github
              :repo "rougier/mu4e-thread-folding")))
+
+(package! valign)

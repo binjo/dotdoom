@@ -334,5 +334,12 @@
 
 (advice-add #'company-ispell :around #'doom-shut-up-a)
 
+(use-package! valign
+  :ensure t
+  :delight valign-mode
+  :custom (valign-fancy-bar t)
+  :commands (valign-mode)
+  :hook (org-mode . valign-mode))
+
 (provide 'config)
 ;;; config.el ends here
