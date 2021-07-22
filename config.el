@@ -101,6 +101,8 @@
                                   (t 'w32)))
           ,(if IS-LINUX '(display . ":0"))))
 
+  (setq org-id-link-to-org-use-id 'create-if-interactive)
+
   ;; http://cestdiego.github.io/blog/2015/08/19/org-protocol/
   (defadvice org-capture
       (after make-full-window-frame activate)
