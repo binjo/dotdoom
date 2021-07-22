@@ -5,7 +5,6 @@
 (doom! :tools
        ;; debugger
        eval
-       ;; snippets
        lookup
        pdf
 
@@ -36,6 +35,7 @@
         +everywhere)
        file-templates
        rotate-text
+       snippets
        :emacs
        vc
        dired
