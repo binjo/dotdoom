@@ -138,20 +138,20 @@
   (setq org-capture-templates
         '(("n" "ToDo" entry
            (file+headline "todo.org" "Todo")
-           "* TODO %?\n  :TIMESTAMP: %T\n"
+           "* TODO %?\n:PROPERTIES:\n:ID:       %(org-id-uuid)\n:TIMESTAMP: %T\n:END:\n"
            :empty-lines 1)
           ("t" "ToDo" entry
            (file+headline "todo.org" "Todo")
-           "* TODO %?\n  :TIMESTAMP: %T\n"
+           "* TODO %?\n:PROPERTIES:\n:ID:       %(org-id-uuid)\n:TIMESTAMP: %T\n:END:\n"
            :empty-lines 1)
           ;; create todo from org-protocol
           ("o" "ToDo" entry
            (file+headline "todo.org" "Todo")
-           "* TODO %:description%?\n  :TIMESTAMP: %T\n\n%:link\n%:initial"
+           "* TODO %:description%?\n:PROPERTIES:\n:ID:       %(org-id-uuid)\n:TIMESTAMP: %T\n:END:\n\n%:link\n%:initial"
            :empty-lines 1)
           ("l" "Bookmarks" entry
            (file+headline "remember.org" "Bookmarks")
-           "* %:description%?\n  :TIMESTAMP: %T\n\n%:link\n%:initial"
+           "* %:description%?\n:PROPERTIES:\n:ID:       %(org-id-uuid)\n:TIMESTAMP: %T\n:END:\n\n%:link\n%:initial"
            :empty-lines 1)))
 
   ;; (setq my-org-templates-dir
@@ -234,9 +234,9 @@
 (after! org-roam
   (setq org-roam-directory (expand-file-name "roam" org-directory))
   (setq org-roam-dailies-capture-templates
-        '(("d" "default" entry #'org-roam-capture--get-point "* %?"
-           :file-name "daily/%<%Y-%m-%d>"
-           :head "#+title: %<%Y-%m-%d>\n#+roam_tags: daily\n\n* Clear TODOs\n\n"
+        '(("d" "default" entry "* %?" :if-new
+           (file+head "%<%Y-%m-%d>.org"
+                      "#+title: %<%Y-%m-%d>\n\n* Clear TODOs\n\n")
            :unnarrowed t
            :empty-lines 1)))
   (map! :map org-mode-map
