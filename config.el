@@ -326,7 +326,11 @@
          "<S-right>" #'mu4e-headers-unfold-all)))
 
 (map! :leader
+      (:when (featurep! :completion ivy)
       :desc "M-x" "SPC" 'counsel-M-x)
+      ;; (:when (featurep! :completion vertico)
+      ;;  :desc "M-x" "SPC" '))
+       )
 
 (after! evil-snipe
   (setq evil-snipe-scope 'buffer))

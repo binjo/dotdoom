@@ -11,7 +11,7 @@
        :completion
        (company +auto +childframe)
        (ivy +childframe +icons +prescient)
-       ;; ivy
+       ;; (vertico +icons)
 
        :ui
        ;; vc-gutter
@@ -74,7 +74,7 @@
         +attach
         +babel
         +capture
-        +roam
+        +roam2
         +noter
         +present
         +pretty)
