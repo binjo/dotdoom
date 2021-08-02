@@ -103,6 +103,9 @@
 
   (setq org-id-link-to-org-use-id 'create-if-interactive)
 
+  ;; state change log into drawer "LOGBOOK"
+  (setq org-log-into-drawer t)
+
   ;; http://cestdiego.github.io/blog/2015/08/19/org-protocol/
   (defadvice org-capture
       (after make-full-window-frame activate)
