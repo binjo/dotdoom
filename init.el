@@ -95,8 +95,8 @@
        ;; rss
        ;; ;; twitter
        :email
-       (mu4e
-        +gmail)
+       ;; (mu4e
+       ;;  +gmail)
        ;; (write
        ;;  +wordnut
        ;;  +osxdict
