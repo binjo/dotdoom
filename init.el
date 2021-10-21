@@ -10,8 +10,8 @@
 
        :completion
        (company +auto +childframe)
-       (ivy +childframe +icons +prescient)
-       ;; (vertico +icons)
+       ;; (ivy +childframe +icons +prescient)
+       (vertico +icons)
 
        :ui
        ;; vc-gutter

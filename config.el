@@ -255,13 +255,13 @@
         (:prefix ("m" . "org-roam")
          "a" #'org-roam-alias-add)))
 
-(after! ivy
-  (setq ivy-count-format "(%d/%d)")
-  (setq ivy-use-virtual-buffers t))
+;; (after! ivy
+;;   (setq ivy-count-format "(%d/%d)")
+;;   (setq ivy-use-virtual-buffers t))
 
-(after! ivy-posframe
-  (setf (alist-get t ivy-posframe-display-functions-alist)
-        #'ivy-posframe-display-at-frame-center))
+;; (after! ivy-posframe
+;;   (setf (alist-get t ivy-posframe-display-functions-alist)
+;;         #'ivy-posframe-display-at-frame-center))
 
 ;; (use-package! osx-dictionary
 ;;   :defer t
@@ -303,10 +303,10 @@
   (load! "+rime-probe-english"))
 
 (map! :leader
-      (:when (featurep! :completion ivy)
-      :desc "M-x" "SPC" 'counsel-M-x)
-      ;; (:when (featurep! :completion vertico)
-      ;;  :desc "M-x" "SPC" '))
+      ;; (:when (featurep! :completion ivy)
+      ;; :desc "M-x" "SPC" 'counsel-M-x)
+      (:when (featurep! :completion vertico)
+       :desc "M-x" "SPC" #'execute-extended-command)
        )
 
 (after! evil-snipe
@@ -323,6 +323,10 @@
   :custom (valign-fancy-bar t)
   :commands (valign-mode)
   :hook (org-mode . valign-mode))
+
+(use-package! vertico-posframe
+  :config
+  (vertico-posframe-mode 1))
 
 (provide 'config)
 ;;; config.el ends here

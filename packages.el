@@ -19,3 +19,7 @@
 (package! rime)
 
 (package! valign)
+
+(package! vertico-posframe
+  :recipe (:host github
+           :repo "tumashu/vertico-posframe"))
