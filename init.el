@@ -89,6 +89,7 @@
        (rust +lsp)
        (java +lsp)
        (csharp +lsp)
+       yaml
 
        ;; :app
        ;; sx
