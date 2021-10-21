@@ -11,7 +11,7 @@
   :load-path "~/repos/yara-mode"
   :mode "\\.yara"
   :config
-  (add-hook! 'yara-mode-hook #'(doom-enable-delete-trailing-whitespace-h yas-minor-mode-on)))
+  (add-hook! 'yara-mode-hook #'doom-enable-delete-trailing-whitespace-h #'yas-minor-mode-on))
 
 ;;
 ;; Config
@@ -27,6 +27,9 @@
  doom-font (font-spec :family "Source Code Pro" :size 14)
  doom-unicode-font (font-spec :family "WenQuanYi Zen Hei Mono" :size 14)
  doom-unicode-extra-fonts nil)
+
+;; Fix doom upgrade breaking on undefined variable
+(setq comp-native-version-dir "~")
 
 (when IS-MAC
   (setq ns-use-thin-smoothing t)
@@ -71,10 +74,10 @@
   (if (file-directory-p (expand-file-name "daily" org-roam-directory))
       (add-to-list 'org-agenda-files (expand-file-name "daily" org-roam-directory)))
   (add-hook! 'org-mode-hook
-             #'(turn-on-font-lock
-                toggle-truncate-lines
-                doom-enable-delete-trailing-whitespace-h
-                visual-line-mode))
+             #'turn-on-font-lock
+                #'toggle-truncate-lines
+                #'doom-enable-delete-trailing-whitespace-h
+                #'visual-line-mode)
   (setq org-outline-path-complete-in-steps nil
         org-fast-tag-selection-single-key t)
   (setq ;; org-agenda-custom-commands
