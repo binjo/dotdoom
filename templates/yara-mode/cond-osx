@@ -1,7 +1,0 @@
-# key: cond-osx
-# name: cond-osx
-# expand-env: ((yas-indent-line 'fixed))
-# --
-(uint32(0) == 0xBEBAFECA or uint32(0) == 0xFEEDFACE or uint32(0) == 0xFEEDFACF or uint32(0) == 0xCEFAEDFE)
-and
-$1

@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: cond-ole
-# key: olehdr
-# expand-env: ((yas-indent-line 'fixed))
-# --
-(uint32(0) == 0xe011cfd0)
-and $1

@@ -1,7 +1,0 @@
-# key: linux64
-# name: linux64
-# expand-env: ((yas-indent-line 'fixed))
-# --
-((uint32(0) == 0x464c457f) and (uint8(4) == 2))
-and
-$1
