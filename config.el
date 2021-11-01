@@ -253,7 +253,8 @@
          "F" #'binjo/refile-to-roam-today-file
          "C" #'binjo/refile-from-headline)
         (:prefix ("m" . "org-roam")
-         "a" #'org-roam-alias-add)))
+         "a" #'org-roam-alias-add))
+  (add-hook! 'org-capture-after-finalize-hook #'org-roam-db-autosync--try-update-on-save-h))
 
 ;; (after! ivy
 ;;   (setq ivy-count-format "(%d/%d)")
