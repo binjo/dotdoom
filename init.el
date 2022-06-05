@@ -65,7 +65,9 @@
        :lang
        ;; lsp
        data
-       (python +conda +lsp +pyenv +pipenv +pyright)
+       (python
+        ;; +conda
+        +lsp +pyenv +pipenv +pyright)
        ;; ess
        ;; (latex
        ;;  +latexmk
