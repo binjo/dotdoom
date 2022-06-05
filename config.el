@@ -244,6 +244,7 @@
            (file+head "%<%Y-%m-%d>.org"
                       "#+title: %<%Y-%m-%d>\n\n* Clear TODOs\n\n")
            :unnarrowed t
+           :jump-to-captured t
            :empty-lines 1)))
   (map! :map org-mode-map
         :localleader
@@ -254,7 +255,8 @@
          "C" #'binjo/refile-from-headline)
         (:prefix ("m" . "org-roam")
          "a" #'org-roam-alias-add))
-  (add-hook! 'org-capture-after-finalize-hook #'org-roam-db-autosync--try-update-on-save-h))
+  ;; (add-hook! 'org-capture-after-finalize-hook #'org-roam-db-autosync--try-update-on-save-h)
+  )
 
 ;; (after! ivy
 ;;   (setq ivy-count-format "(%d/%d)")
