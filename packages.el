@@ -23,3 +23,9 @@
 (package! vertico-posframe
   :recipe (:host github
            :repo "tumashu/vertico-posframe"))
+
+;; (package! ob-yara
+;;   :recipe (:host github
+;;            :repo "limoiie/ob-yara"))
+
+(package! org-modern)

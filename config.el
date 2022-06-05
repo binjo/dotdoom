@@ -284,6 +284,10 @@
 
 ;; (global-display-line-numbers-mode -1)
 
+(use-package! org-modern
+  :init
+  (global-org-modern-mode))
+
 (use-package! rime
   :init
   (setq rime-librime-root "~/.local/librime/dist")
