@@ -285,8 +285,9 @@
 ;; (global-display-line-numbers-mode -1)
 
 (use-package! org-modern
-  :init
-  (global-org-modern-mode))
+  :hook (org-mode . org-modern-mode)
+  :config
+  (setq org-modern-table nil))
 
 (use-package! rime
   :init
