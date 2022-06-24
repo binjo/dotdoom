@@ -77,7 +77,8 @@
              #'turn-on-font-lock
                 #'toggle-truncate-lines
                 #'doom-enable-delete-trailing-whitespace-h
-                #'visual-line-mode)
+                #'visual-line-mode
+                #'+org-pretty-mode)
   (setq org-outline-path-complete-in-steps nil
         org-fast-tag-selection-single-key t)
   (setq ;; org-agenda-custom-commands
