@@ -340,5 +340,9 @@
   :config
   (vertico-posframe-mode 1))
 
+(after! lsp-mode
+  (if (file-directory-p "/Do_Not_Scan/tmp")
+    (add-to-list 'lsp-file-watch-ignored-directories "/Do_Not_Scan/tmp")))
+
 (provide 'config)
 ;;; config.el ends here
