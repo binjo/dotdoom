@@ -11,14 +11,14 @@
   :load-path "~/repos/yara-mode"
   :mode "\\.yara"
   :config
-  (add-hook! 'yara-mode-hook #'doom-enable-delete-trailing-whitespace-h #'yas-minor-mode-on)
+  (add-hook! 'yara-mode-hook #'doom-enable-delete-trailing-whitespace-h #'yas-minor-mode-on #'lsp)
   (with-eval-after-load 'lsp-mode
-  (add-to-list 'lsp-language-id-configuration
-    '(yara-mode . "yara"))
-  (lsp-register-client
-    (make-lsp-client :new-connection (lsp-stdio-connection "yls")
-                     :activation-fn (lsp-activate-on "yara")
-                     :server-id 'yls))))
+    (add-to-list 'lsp-language-id-configuration
+                 '(yara-mode . "yara"))
+    (lsp-register-client
+     (make-lsp-client :new-connection (lsp-stdio-connection "yls")
+                      :activation-fn (lsp-activate-on "yara")
+                      :server-id 'yls))))
 
 ;;
 ;; Config
