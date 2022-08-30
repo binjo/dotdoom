@@ -43,7 +43,9 @@
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark))
   (add-to-list 'default-frame-alist '(undecorated . t))
-  (setq display-line-numbers-type nil)
+  (setq display-line-numbers-type 'relative
+        doom-line-numbers-style 'relative
+        display-line-numbers 'relative)
   ;; maximize first frame
   (set-frame-parameter nil 'fullscreen 'maximized))
 
