@@ -66,7 +66,7 @@
        ;; lsp
        data
        (python
-        ;; +conda
+        +conda
         +lsp +pyenv +pipenv +pyright)
        ;; ess
        ;; (latex
