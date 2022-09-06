@@ -94,6 +94,7 @@
        yaml
 
        ;; :app
+       ;; everywhere
        ;; sx
        ;; rss
        ;; ;; twitter
