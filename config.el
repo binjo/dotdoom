@@ -354,5 +354,8 @@
   (if (file-directory-p "/Do_Not_Scan/tmp")
     (add-to-list 'lsp-file-watch-ignored-directories "/Do_Not_Scan/tmp")))
 
+(after! markdown-mode
+  (setq markdown-fontify-code-blocks-natively t))
+
 (provide 'config)
 ;;; config.el ends here
