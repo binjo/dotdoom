@@ -42,7 +42,7 @@
   (setq ns-use-thin-smoothing t)
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark))
-  (add-to-list 'default-frame-alist '(undecorated . t))
+  ;; (add-to-list 'default-frame-alist '(undecorated . t)) ;; for emacs-29?
   (setq display-line-numbers-type 'relative
         doom-line-numbers-style 'relative
         display-line-numbers 'relative)
