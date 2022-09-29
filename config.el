@@ -54,7 +54,7 @@
 
 ;; set before other settings
 (if (file-directory-p "/Do_Not_Scan")
-    (setq org-directory (expand-file-name "org" "/Do_Not_Scan"))
+    (setq org-directory (file-truename (expand-file-name "org" "/Do_Not_Scan")))
   (setq org-directory
         (expand-file-name "org" doom-private-dir)))
 
@@ -249,7 +249,7 @@
         ))
 
 (after! org-roam
-  (setq org-roam-directory (expand-file-name "roam" org-directory))
+  (setq org-roam-directory (file-truename (expand-file-name "roam" org-directory)))
   (setq org-roam-dailies-capture-templates
         '(("d" "default" entry
            "* TODO %?\n:PROPERTIES:\n:ID:       %(org-id-uuid)\n:TIMESTAMP: %T\n:END:\n"
