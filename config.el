@@ -251,9 +251,11 @@
 (after! org-roam
   (setq org-roam-directory (expand-file-name "roam" org-directory))
   (setq org-roam-dailies-capture-templates
-        '(("d" "default" entry "* %?" :if-new
-           (file+head "%<%Y-%m-%d>.org"
-                      "#+title: %<%Y-%m-%d>\n\n* Clear TODOs\n\n")
+        '(("d" "default" entry
+           "* TODO %?\n:PROPERTIES:\n:ID:       %(org-id-uuid)\n:TIMESTAMP: %T\n:END:\n"
+           :if-new
+           (file+head+olp "%<%Y-%m-%d>.org"
+                      "#+title: %<%Y-%m-%d>\n\n* Clear TODOs\n\n" ("Clear TODOs"))
            :unnarrowed t
            :jump-to-captured t
            :empty-lines 1)))
