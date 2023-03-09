@@ -346,7 +346,7 @@
   :hook (org-mode . valign-mode))
 
 (after! consult
-  (setq consult-preview-key "No Preview"))
+  (setq consult-preview-key nil))
 
 (use-package! vertico-posframe
   :config
