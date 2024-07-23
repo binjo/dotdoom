@@ -6,19 +6,29 @@
 ;; Plugins
 ;;
 
+(cond
+  (IS-WINDOWS (setq my-yara-repo "d:/Exclusive/repos/yara-mode"))
+  (IS-MAC (setq my-yara-repo "~/repos/yara-mode")))
+
 (use-package! yara-mode
   :after yasnippet
-  :load-path "~/repos/yara-mode"
+  :load-path my-yara-repo
   :mode "\\.yara"
   :config
-  (add-hook! 'yara-mode-hook #'doom-enable-delete-trailing-whitespace-h #'yas-minor-mode-on #'lsp)
-  (with-eval-after-load 'lsp-mode
-    (add-to-list 'lsp-language-id-configuration
-                 '(yara-mode . "yara"))
-    (lsp-register-client
-     (make-lsp-client :new-connection (lsp-stdio-connection "yls")
-                      :activation-fn (lsp-activate-on "yara")
-                      :server-id 'yls))))
+  (add-hook! 'yara-mode-hook #'doom-enable-delete-trailing-whitespace-h #'yas-minor-mode-on)
+  (cond
+   ((modulep! :tools lsp +lsp)
+    (with-eval-after-load 'lsp-mode
+      (add-hook! 'yara-mode-hook #'lsp)
+      (add-to-list 'lsp-language-id-configuration
+                   '(yara-mode . "yara"))
+      (lsp-register-client
+       (make-lsp-client :new-connection (lsp-stdio-connection "yls")
+                        :activation-fn (lsp-activate-on "yara")
+                        :server-id 'yls))))
+   ((modulep! :tools lsp +eglot)
+    (add-hook! 'yara-mode-hook #'eglot)
+    (set-eglot-client! 'yara-mode '("yls")))))
 
 ;;
 ;; Config
@@ -31,32 +41,57 @@
  +default-repeat-forward-key ";"
  +default-repeat-backward-key "'"
  doom-large-file-size 10
- doom-font (font-spec :family "Source Code Pro" :size 14)
- doom-unicode-font (font-spec :family "WenQuanYi Zen Hei Mono" :size 14)
+ display-line-numbers-type 'relative
+ doom-line-numbers-style 'relative
+ display-line-numbers 'relative
  doom-unicode-extra-fonts nil)
+
+;; maximize first frame
+;; (add-hook! 'doom-after-init-hook
+;;   (set-frame-parameter nil 'fullscreen 'maximized)
+;; )
+
+(when IS-WINDOWS
+  (setq
+   doom-font (font-spec :family "CaskaydiaCove NFM" :size 13.0)
+   doom-unicode-font (font-spec :family "Microsoft YaHei" :size 13.0)
+   )
+  ;; (set-face-attribute 'default nil
+  ;;                     :family "CaskaydiaCove NFM"
+  ;;                     :height 130
+  ;;                     :weight 'normal
+  ;;                     :width 'normal)
+  (copy-face 'default 'fixed-pitch))
 
 ;; Fix doom upgrade breaking on undefined variable
 (setq comp-native-version-dir "~")
 
 (when IS-MAC
+  (setq
+   doom-font (font-spec :family "Source Code Pro" :size 14)
+   doom-unicode-font (font-spec :family "WenQuanYi Zen Hei Mono" :size 14))
   (setq ns-use-thin-smoothing t)
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark))
   ;; (add-to-list 'default-frame-alist '(undecorated . t)) ;; for emacs-29?
-  (setq display-line-numbers-type 'relative
-        doom-line-numbers-style 'relative
-        display-line-numbers 'relative)
-  ;; maximize first frame
-  (set-frame-parameter nil 'fullscreen 'maximized))
+  )
 
 (setq +file-templates-dir
       (expand-file-name "templates/" (file-name-directory doom-private-dir)))
 
 ;; set before other settings
-(if (file-directory-p "/Do_Not_Scan")
-    (setq org-directory (file-truename (expand-file-name "org" "/Do_Not_Scan")))
-  (setq org-directory
-        (expand-file-name "org" doom-private-dir)))
+(when IS-MAC
+  (if (file-directory-p "/Do_Not_Scan")
+      (setq org-directory (file-truename (expand-file-name "org" "/Do_Not_Scan")))
+    (setq org-directory
+          (expand-file-name "org" doom-private-dir)))
+  )
+(when IS-WINDOWS
+  (if (file-directory-p "D:\\Exclusive\\repos")
+      (setq org-directory (file-truename (expand-file-name "org" "D:\\Exclusive\\repos")))
+    (setq org-directory
+          (expand-file-name "org" doom-private-dir)))
+  )
 
 (after! org
   (when (version<= "9.2" (org-version))
@@ -326,7 +361,7 @@
 (map! :leader
       ;; (:when (featurep! :completion ivy)
       ;; :desc "M-x" "SPC" 'counsel-M-x)
-      (:when (featurep! :completion vertico)
+      (:when (modulep! :completion vertico)
        :desc "M-x" "SPC" #'execute-extended-command)
        )
 

@@ -60,13 +60,13 @@
        ;; upload
        ;; tmux
        ;; password-store
-       lsp
+       (lsp +eglot)
 
        :lang
        ;; lsp
        data
        (python
-        +conda
+        ;; +conda
         +lsp +pyenv +pipenv +pyright)
        ;; ess
        ;; (latex
