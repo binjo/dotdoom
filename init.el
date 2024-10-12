@@ -31,8 +31,9 @@
         +defaults)
        window-select
        :editor
-       (evil
-        +everywhere)
+       (meow +qwerty)
+       ;; (evil
+       ;;  +everywhere)
        file-templates
        rotate-text
        snippets
@@ -112,6 +113,7 @@
        ;; (syntax +childframe)
 
        :config
-       (default +evil +bindings)
+       ;; (default +evil +bindings)
+       (default +bindings)
        ;; literate
        )

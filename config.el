@@ -394,5 +394,11 @@
 (after! markdown-mode
   (setq markdown-fontify-code-blocks-natively t))
 
+(after! meow
+  (setq meow-cursor-type-normal 'box)
+  (setq meow-use-clipboard t)
+  (meow-leader-define-key '("b" . "C-c w b"))
+  (add-to-list 'meow-expand-exclude-mode-list 'org-mode))
+
 (provide 'config)
 ;;; config.el ends here
