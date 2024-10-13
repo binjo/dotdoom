@@ -11,11 +11,13 @@
   (IS-MAC (setq my-yara-repo "~/repos/yara-mode")))
 
 (use-package! yara-mode
-  :after yasnippet
+  :defer t
   :load-path my-yara-repo
   :mode "\\.yara"
   :config
-  (add-hook! 'yara-mode-hook #'doom-enable-delete-trailing-whitespace-h #'yas-minor-mode-on)
+  (add-hook! 'yara-mode-hook
+             '(doom-enable-delete-trailing-whitespace-h
+               yas-minor-mode-on))
   (cond
    ((modulep! :tools lsp +lsp)
     (with-eval-after-load 'lsp-mode
@@ -27,7 +29,7 @@
                         :activation-fn (lsp-activate-on "yara")
                         :server-id 'yls))))
    ((modulep! :tools lsp +eglot)
-    (add-hook! 'yara-mode-hook #'eglot)
+    (add-hook! 'yara-mode-hook #'eglot-ensure)
     (set-eglot-client! 'yara-mode '("yls")))))
 
 ;;
