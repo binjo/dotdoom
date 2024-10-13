@@ -397,9 +397,34 @@
   (setq markdown-fontify-code-blocks-natively t))
 
 (after! meow
+  (transient-define-prefix dispatch-goto-menu () "This isn't documentation"
+  [["Move"
+    ("b" "bottom" end-of-buffer)
+    ("g" "top" beginning-of-buffer)
+    ("d" "definition (xref)" xref-find-definitions)
+    ("h" "beginning of line" beginning-of-line)
+    ("e" "end of line" end-of-line)
+    ("s" "first non-blank-line" beginning-of-line-text)]
+   ["Buffer"
+    ("n" "next buffer" next-buffer)
+    ("p" "previous buffer" previous-buffer)
+    ("B" "bury buffer" bury-buffer)
+    ("U" "unbury buffer" unbury-buffer)
+    "Avy"
+    ("c" "goto char" avy-goto-char)
+    ("l" "got line" avy-goto-line)]
+   ])
   (setq meow-cursor-type-normal 'box)
+  (setq blink-cursor-interval 0.3)
   (setq meow-use-clipboard t)
-  (meow-leader-define-key '("b" . "C-c w b"))
+  (meow-leader-define-key
+   '(";" . "M-:")
+   '("b" . "C-c w b")
+   '("," . "C-c w b"))
+  (meow-normal-define-key
+   '("." . meow-inner-of-thing)
+   '("," . meow-bounds-of-thing)
+   '("g" . dispatch-goto-menu))
   (add-to-list 'meow-expand-exclude-mode-list 'org-mode))
 
 (provide 'config)
