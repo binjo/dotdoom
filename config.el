@@ -35,7 +35,6 @@
 ;;
 ;; Config
 ;;
-
 (setq
  fancy-splash-image "~/.doom.d/black-hole.png"
  doom-line-numbers-style nil
@@ -56,7 +55,7 @@
 (when IS-WINDOWS
   (setq
    doom-font (font-spec :family "CaskaydiaCove NFM" :size 13.0)
-   doom-unicode-font (font-spec :family "Microsoft YaHei" :size 13.0)
+   doom-symbol-font (font-spec :family "Microsoft YaHei" :size 13.0)
    )
   ;; (set-face-attribute 'default nil
   ;;                     :family "CaskaydiaCove NFM"
@@ -396,31 +395,68 @@
 (after! markdown-mode
   (setq markdown-fontify-code-blocks-natively t))
 
-(after! meow
+(after! magit
+  ;; :config
+  ;; By default a thin line whose color indicates the transient-ness of the
+  ;; menu is used.  Without an echo area that would look odd and below we
+  ;; color the border instead.
+  (setq transient-mode-line-format nil)
+
+  (setq transient-display-buffer-action
+        (list
+         (lambda (buffer _)
+           (posframe-show
+            buffer
+            :poshandler #'posframe-poshandler-frame-center
+            ;; To reduce the likelyhood of horizontal resizing, use the
+            ;; same minimal width as transient uses by default.  It matches
+            ;; the width needed to display the commands common to all menus.
+            :min-width transient-minimal-frame-width
+            ;; If the parent frame is small, there might not be enough room.
+            ;; By default posframe wraps lines, but we truncate instead.
+            :lines-truncate t
+            ;; Enable the fringe, so that we can see when truncation has
+            ;; occured.  Hm, actually that's not good enough, so let's not.
+            ;; :right-fringe 8
+            ;;
+            ;; Indicate transient-ness of the menu.  You could also use a
+            ;; constant color, if you don't care about this.
+            :internal-border-color (transient--prefix-color)
+            :internal-border-width 1)
+           ;; `posframe-show' it not suitable for use as a display action
+           ;; and it appears posframe does not provide some other function
+           ;; that is.  We can make this more complient by at least
+           ;; returning the used window.
+           (get-buffer-window transient--buffer t))))
   (transient-define-prefix dispatch-goto-menu () "This isn't documentation"
-  [["Move"
-    ("b" "bottom" end-of-buffer)
-    ("g" "top" beginning-of-buffer)
-    ("d" "definition (xref)" xref-find-definitions)
-    ("h" "beginning of line" beginning-of-line)
-    ("e" "end of line" end-of-line)
-    ("s" "first non-blank-line" beginning-of-line-text)]
-   ["Buffer"
-    ("n" "next buffer" next-buffer)
-    ("p" "previous buffer" previous-buffer)
-    ("B" "bury buffer" bury-buffer)
-    ("U" "unbury buffer" unbury-buffer)
-    "Avy"
-    ("c" "goto char" avy-goto-char)
-    ("l" "got line" avy-goto-line)]
-   ])
+    [["Move"
+      ("b" "bottom" end-of-buffer)
+      ("g" "top" beginning-of-buffer)
+      ("d" "definition (xref)" xref-find-definitions)
+      ("h" "beginning of line" beginning-of-line)
+      ("e" "end of line" end-of-line)
+      ("s" "first non-blank-line" beginning-of-line-text)]
+     ["Buffer"
+      ("n" "next buffer" next-buffer)
+      ("p" "previous buffer" previous-buffer)
+      ("B" "bury buffer" bury-buffer)
+      ("U" "unbury buffer" unbury-buffer)
+      "Avy"
+      ("c" "goto char" avy-goto-char)
+      ("l" "got line" avy-goto-line)]
+     ]))
+
+(after! meow
   (setq meow-cursor-type-normal 'box)
   (setq blink-cursor-interval 0.3)
   (setq meow-use-clipboard t)
   (meow-leader-define-key
    '(";" . "M-:")
    '("b" . "C-c w b")
-   '("," . "C-c w b"))
+   '("," . "C-c w b")
+   '("c k" . kill-current-buffer)
+   '("c r" . consult-recent-file)
+   )
   (meow-normal-define-key
    '("." . meow-inner-of-thing)
    '("," . meow-bounds-of-thing)
