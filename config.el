@@ -463,5 +463,10 @@
    '("g" . dispatch-goto-menu))
   (add-to-list 'meow-expand-exclude-mode-list 'org-mode))
 
+(use-package! powershell-ts-mode
+  :defer t
+  :config
+  (setq powershell-ts-enable-imenu-top-level-vars nil))
+
 (provide 'config)
 ;;; config.el ends here

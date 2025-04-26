@@ -29,3 +29,7 @@
 ;;            :repo "limoiie/ob-yara"))
 
 (package! org-modern)
+
+(package! powershell-ts-mode
+  :recipe (:host github
+           :repo "dmille56/powershell-ts-mode"))
