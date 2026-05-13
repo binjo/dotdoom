@@ -305,8 +305,9 @@
   :mode "\\.yara"
   :config
   (add-hook! 'yara-mode-hook
-             '(doom-enable-delete-trailing-whitespace-h
-               yas-minor-mode-on))
+    (defun +yara-enable-delete-trailing-whitespace-h ()
+      (add-hook 'before-save-hook #'delete-trailing-whitespace nil t))
+    #'yas-minor-mode-on)
   (cond
    ((modulep! :tools lsp +lsp)
     (with-eval-after-load 'lsp-mode
@@ -314,12 +315,12 @@
       (add-to-list 'lsp-language-id-configuration
                    '(yara-mode . "yara"))
       (lsp-register-client
-       (make-lsp-client :new-connection (lsp-stdio-connection "yls")
+       (make-lsp-client :new-connection (lsp-stdio-connection '("uvx" "yls"))
                         :activation-fn (lsp-activate-on "yara")
                         :server-id 'yls))))
    ((modulep! :tools lsp +eglot)
     (add-hook! 'yara-mode-hook #'eglot-ensure)
-    (set-eglot-client! 'yara-mode '("yls")))))
+    (set-eglot-client! 'yara-mode '("uvx" "yls")))))
 
 (use-package! powershell-ts-mode
   :defer t
@@ -390,6 +391,14 @@
   (setq blink-cursor-interval 0.3)
   (setq meow-use-clipboard t)
   (setq meow--delete-region-function 'kill-region)
+
+  ;; Improve visibility for Tokyo Night theme
+  (custom-set-faces!
+    `(meow-face-selection :background ,(doom-color 'magenta) :foreground ,(doom-color 'base0))
+    `(meow-face-search :background ,(doom-color 'cyan) :foreground ,(doom-color 'base0))
+    `(meow-beacon-indicator :background ,(doom-color 'yellow) :foreground ,(doom-color 'base0) :weight bold)
+    `(meow-beacon :background ,(doom-color 'yellow) :foreground ,(doom-color 'base0) :weight bold))
+
   ;; (map! :leader
   ;;       :desc "Kill current buffer" "k" #'kill-current-buffer)
   (meow-leader-define-key
