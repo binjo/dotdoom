@@ -6,7 +6,7 @@
        ;; debugger
        eval
        lookup
-       pdf
+       ;; pdf
        ;; pdf
 
        :completion

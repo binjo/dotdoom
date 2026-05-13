@@ -31,7 +31,16 @@
 (when (not (display-graphic-p))
   (standard-display-unicode-special-glyphs))
 
+(when IS-WINDOWS
+  (setq
+   doom-font (font-spec :family "CaskaydiaCove NFM" :size 13.0)
+   doom-symbol-font (font-spec :family "Microsoft YaHei" :size 13.0))
+  (copy-face 'default 'fixed-pitch))
+
 (when IS-MAC
+  (setq
+   doom-font (font-spec :family "Source Code Pro" :size 14)
+   doom-unicode-font (font-spec :family "WenQuanYi Zen Hei Mono" :size 14))
   (setq ns-use-thin-smoothing t)
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark))
@@ -43,10 +52,17 @@
   (set-frame-parameter nil 'fullscreen 'maximized))
 
 ;; set before other settings
-(if (file-directory-p "/Do_Not_Scan")
-    (setq org-directory (file-truename (expand-file-name "org" "/Do_Not_Scan")))
-  (setq org-directory
-        (expand-file-name "org" doom-private-dir)))
+(when IS-MAC
+  (if (file-directory-p "/Do_Not_Scan")
+      (setq org-directory (file-truename (expand-file-name "org" "/Do_Not_Scan")))
+    (setq org-directory
+          (expand-file-name "org" doom-private-dir))))
+
+(when IS-WINDOWS
+  (if (file-directory-p "D:\\Exclusive\\repos")
+      (setq org-directory (file-truename (expand-file-name "org" "D:\\Exclusive\\repos")))
+    (setq org-directory
+          (expand-file-name "org" doom-private-dir))))
 
 (after! org
   (setq org-id-link-to-org-use-id 'create-if-interactive)
@@ -279,13 +295,18 @@
 
 (advice-add #'company-ispell :around #'doom-shut-up-a)
 
+(cond
+  (IS-WINDOWS (setq my-yara-repo "d:/Exclusive/repos/yara-mode"))
+  ((or IS-MAC IS-LINUX) (setq my-yara-repo "~/repos/yara-mode")))
+
 (use-package! yara-mode
   :defer t
-  :load-path "~/repos/yara-mode"
+  :load-path my-yara-repo
   :mode "\\.yara"
   :config
   (add-hook! 'yara-mode-hook
-             '(yas-minor-mode-on))
+             '(doom-enable-delete-trailing-whitespace-h
+               yas-minor-mode-on))
   (cond
    ((modulep! :tools lsp +lsp)
     (with-eval-after-load 'lsp-mode
@@ -298,7 +319,7 @@
                         :server-id 'yls))))
    ((modulep! :tools lsp +eglot)
     (add-hook! 'yara-mode-hook #'eglot-ensure)
-    (set-eglot-client! 'yara-mode '("/home/genwei/.local/bin/uvx yls")))))
+    (set-eglot-client! 'yara-mode '("yls")))))
 
 (use-package! powershell-ts-mode
   :defer t
@@ -375,6 +396,8 @@
    '(";" . "M-:")
    '("b" . "C-c w b")
    '("," . "C-c w b")
+   '("c k" . kill-current-buffer)
+   '("c r" . consult-recent-file)
    '("c x" . kill-current-buffer)
    '("f r" . consult-recent-file)
    '("p f" . projectile-find-file))

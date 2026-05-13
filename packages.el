@@ -10,13 +10,13 @@
 ;;   :recipe (:host github
 ;;            :repo "binjo/yara-mode"))
 
-(package! osx-dictionary)
+;; (package! osx-dictionary)
 
 ;; (package! org-gcal)
 
 (package! org-super-agenda)
 
-(package! rime)
+;; (package! rime)
 
 (package! valign)
 
