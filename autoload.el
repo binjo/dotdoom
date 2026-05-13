@@ -179,4 +179,36 @@ Org-mode properties drawer already, keep the headline and don’t insert
     (goto-char (point-min))
     (outline-next-heading)))
 
+;;;###autoload
+(defun binjo/convert-to-org-element (beg end)
+  "Convert the selected region to an Org-mode friendly element.
+1. Prepends a comma to lines starting with '*'.
+2. Wraps sections starting with '# **[b/' in a Markdown source block.
+3. Collapses multiple empty or whitespace-only lines into one."
+  (interactive "r")
+  (save-excursion
+    (save-restriction
+      (narrow-to-region beg end)
+
+      ;; Step 1: Replace multiple empty/whitespace lines with a single newline
+      (goto-char (point-min))
+      (while (re-search-forward "\n\\([ \t]*\n\\)\\{2,\\}" nil t)
+        (replace-match "\n\n"))
+
+      ;; Step 2: Escape lines starting with *
+      (goto-char (point-min))
+      (while (re-search-forward "^\\*" nil t)
+        (replace-match ",*"))
+
+      ;; Step 3: Wrap specific Markdown patterns
+      (goto-char (point-min))
+      (while (re-search-forward "^# \\*\\*\\[b/" nil t)
+        (beginning-of-line)
+        (insert "#+BEGIN_SRC markdown\n")
+        (beginning-of-line)
+        (goto-char (point-max))
+        (insert "#+END_SRC\n"))
+
+      (message "Conversion complete."))))
+
 ;;; autoload.el ends here

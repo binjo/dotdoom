@@ -1,7 +1,18 @@
+#+title: Doom Emacs Configuration
+#+property: header-args:emacs-lisp :tangle yes :cache yes :results silent
+
+* Header
+#+begin_src emacs-lisp
 ;;; config.el -*- lexical-binding: t; -*-
+#+end_src
 
+* External Files
+#+begin_src emacs-lisp
 (load! "+bindings")
+#+end_src
 
+* UI & Global Variables
+#+begin_src emacs-lisp
 (setq
  fancy-splash-image (expand-file-name "black-hole.png" doom-private-dir)
  doom-line-numbers-style 'relative
@@ -30,8 +41,24 @@
 
 (when (not (display-graphic-p))
   (standard-display-unicode-special-glyphs))
+#+end_src
 
+* OS Specific
+** Windows
+#+begin_src emacs-lisp
+(when IS-WINDOWS
+  (setq
+   doom-font (font-spec :family "CaskaydiaCove NFM" :size 13.0)
+   doom-symbol-font (font-spec :family "Microsoft YaHei" :size 13.0))
+  (copy-face 'default 'fixed-pitch))
+#+end_src
+
+** macOS
+#+begin_src emacs-lisp
 (when IS-MAC
+  (setq
+   doom-font (font-spec :family "Source Code Pro" :size 14)
+   doom-unicode-font (font-spec :family "WenQuanYi Zen Hei Mono" :size 14))
   (setq ns-use-thin-smoothing t)
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark))
@@ -41,12 +68,23 @@
         display-line-numbers 'relative)
   ;; maximize first frame
   (set-frame-parameter nil 'fullscreen 'maximized))
+#+end_src
 
+* Org Mode
+** General Config
+#+begin_src emacs-lisp
 ;; set before other settings
-(if (file-directory-p "/Do_Not_Scan")
-    (setq org-directory (file-truename (expand-file-name "org" "/Do_Not_Scan")))
-  (setq org-directory
-        (expand-file-name "org" doom-private-dir)))
+(when IS-MAC
+  (if (file-directory-p "/Do_Not_Scan")
+      (setq org-directory (file-truename (expand-file-name "org" "/Do_Not_Scan")))
+    (setq org-directory
+          (expand-file-name "org" doom-private-dir))))
+
+(when IS-WINDOWS
+  (if (file-directory-p "D:\\Exclusive\\repos")
+      (setq org-directory (file-truename (expand-file-name "org" "D:\\Exclusive\\repos")))
+    (setq org-directory
+          (expand-file-name "org" doom-private-dir))))
 
 (after! org
   (setq org-id-link-to-org-use-id 'create-if-interactive)
@@ -58,7 +96,10 @@
                 #'toggle-truncate-lines
                 #'visual-line-mode
                 #'+org-pretty-mode))
+#+end_src
 
+** Modules & Tempo
+#+begin_src emacs-lisp
 (after! org
   (when (version<= "9.2" (org-version))
     (require 'org-tempo)
@@ -74,7 +115,10 @@
 
   (setq org-todo-keywords
         '((sequence "TODO(t)" "STARTED(s!)" "LATER(l)" "|" "DONE(d!)" "CANCELLED(c!)"))))
+#+end_src
 
+** Agenda
+#+begin_src emacs-lisp
 (after! org
   (add-to-list 'org-agenda-text-search-extra-files 'agenda-archives)
 
@@ -97,7 +141,10 @@
         :desc "Weekly Review" "1" #'(lambda ()
                                       (interactive)
                                       (org-agenda nil "W"))))
+#+end_src
 
+** Capture Templates
+#+begin_src emacs-lisp
 (after! org
   (setq +org-capture-frame-parameters
         `((name . "org-capture")
@@ -129,7 +176,10 @@
            (file+headline "remember.org" "Bookmarks")
            "* %:description%?\n:PROPERTIES:\n:ID:       %(org-id-uuid)\n:TIMESTAMP: %T\n:END:\n\n%:link\n%:initial"
            :empty-lines 1))))
+#+end_src
 
+** Org Super Agenda
+#+begin_src emacs-lisp
 (use-package! org-super-agenda
   :after org-agenda
   :init
@@ -181,7 +231,10 @@
         :desc "Super Agenda" "2" #'(lambda ()
                                      (interactive)
                                      (org-agenda nil "c"))))
+#+end_src
 
+** Org Roam
+#+begin_src emacs-lisp
 (after! org-roam
   (setq org-roam-directory (file-truename (expand-file-name "roam" org-directory)))
   (setq org-roam-dailies-capture-templates
@@ -202,12 +255,19 @@
          "C" #'binjo/refile-from-headline)
         (:prefix ("m" . "org-roam")
          "a" #'org-roam-alias-add)))
+#+end_src
 
+** Org Modern
+#+begin_src emacs-lisp
 (use-package! org-modern
   :hook (org-mode . org-modern-mode)
   :config
   (setq org-modern-table nil))
+#+end_src
 
+* Completion & Navigation
+** Vertico & Vertico Posframe
+#+begin_src emacs-lisp
 (use-package! vertico-posframe
   :config
   (setq vertico-posframe-poshandler 'posframe-poshandler-frame-center
@@ -253,10 +313,16 @@
 (map! :leader
       (:when (modulep! :completion vertico)
        :desc "M-x" "SPC" #'execute-extended-command))
+#+end_src
 
+** Consult
+#+begin_src emacs-lisp
 (after! consult
   (setq consult-preview-key nil))
+#+end_src
 
+** Affe
+#+begin_src emacs-lisp
 (use-package! affe
   :config
   ;; Tell Affe to use the Orderless compiler for fuzzy matching
@@ -272,20 +338,32 @@
   (map! :leader
         :desc "Asynchronous fuzzy find" "f F" #'affe-find
         :desc "Asynchronous grep"       "s g" #'affe-grep))
+#+end_src
 
+* Programming & Modes
+** LSP Mode
+#+begin_src emacs-lisp
 (after! lsp-mode
   (if (file-directory-p "/Do_Not_Scan/tmp")
     (add-to-list 'lsp-file-watch-ignored-directories "/Do_Not_Scan/tmp")))
 
 (advice-add #'company-ispell :around #'doom-shut-up-a)
+#+end_src
+
+** Yara Mode
+#+begin_src emacs-lisp
+(cond
+  (IS-WINDOWS (setq my-yara-repo "d:/Exclusive/repos/yara-mode"))
+  (IS-MAC (setq my-yara-repo "~/repos/yara-mode")))
 
 (use-package! yara-mode
   :defer t
-  :load-path "~/repos/yara-mode"
+  :load-path my-yara-repo
   :mode "\\.yara"
   :config
   (add-hook! 'yara-mode-hook
-             '(yas-minor-mode-on))
+             '(doom-enable-delete-trailing-whitespace-h
+               yas-minor-mode-on))
   (cond
    ((modulep! :tools lsp +lsp)
     (with-eval-after-load 'lsp-mode
@@ -298,16 +376,35 @@
                         :server-id 'yls))))
    ((modulep! :tools lsp +eglot)
     (add-hook! 'yara-mode-hook #'eglot-ensure)
-    (set-eglot-client! 'yara-mode '("/home/genwei/.local/bin/uvx yls")))))
+    (set-eglot-client! 'yara-mode '("yls")))))
+#+end_src
 
+** PowerShell Mode
+#+begin_src emacs-lisp
 (use-package! powershell-ts-mode
   :defer t
   :config
   (setq powershell-ts-enable-imenu-top-level-vars nil))
+#+end_src
 
+** Markdown Mode
+#+begin_src emacs-lisp
 (after! markdown-mode
   (setq markdown-fontify-code-blocks-natively t))
+#+end_src
 
+** OSX Dictionary
+#+begin_src emacs-lisp
+(use-package! osx-dictionary
+  :defer t
+  :config
+  (map! :leader
+        (:desc "dictionary" :prefix "d"
+         :desc "Search word at point and display result with buffer" :nv "w" #'osx-dictionary-search-pointer)))
+#+end_src
+
+** Magit & Transient
+#+begin_src emacs-lisp
 ;; Fix for transient error on some Emacs versions
 (unless (boundp 'overriding-text-conversion-style)
   (defvar overriding-text-conversion-style nil))
@@ -363,7 +460,11 @@
       ("c" "goto char" avy-goto-char)
       ("l" "got line" avy-goto-line)]
      ]))
+#+end_src
 
+* Editing & Keys
+** Meow
+#+begin_src emacs-lisp
 (after! meow
   (setq meow-cursor-type-normal 'box)
   (setq blink-cursor-interval 0.3)
@@ -375,6 +476,8 @@
    '(";" . "M-:")
    '("b" . "C-c w b")
    '("," . "C-c w b")
+   '("c k" . kill-current-buffer)
+   '("c r" . consult-recent-file)
    '("c x" . kill-current-buffer)
    '("f r" . consult-recent-file)
    '("p f" . projectile-find-file))
@@ -383,13 +486,45 @@
    '("," . meow-bounds-of-thing)
    '("g" . dispatch-goto-menu))
   (add-to-list 'meow-expand-exclude-mode-list 'org-mode))
+#+end_src
 
+** Evil Snipe
+#+begin_src emacs-lisp
 (after! evil-snipe
   (setq evil-snipe-scope 'buffer))
+#+end_src
 
+* Miscellaneous
+** Valign
+#+begin_src emacs-lisp
 (use-package! valign
   :ensure t
   :delight valign-mode
   :custom (valign-fancy-bar t)
   :commands (valign-mode)
   :hook (org-mode . valign-mode))
+#+end_src
+
+** Rime
+#+begin_src emacs-lisp
+(use-package! rime
+  :init
+  (setq rime-librime-root "~/.local/librime/dist")
+  (setq rime-user-data-dir (file-truename "~/Library/Rime"))
+  :after-call after-find-file pre-command-hook
+  :custom
+  (default-input-method "rime")
+  (rime-show-candidate 'posframe)
+  :config
+  (defadvice! +rime--posframe-display-result-a (args)
+    "给 `rime--posframe-display-result' 传入的字符串加一个全角空
+格，以解决 `posframe' 偶尔吃字的问题。"
+    :filter-args #'rime--posframe-display-result
+    (cl-destructuring-bind (result) args
+      (let ((newresult (if (string-blank-p result)
+                           result
+                         (concat result "　"))))
+        (list newresult))))
+
+  (load! "+rime-probe-english"))
+#+end_src

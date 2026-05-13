@@ -7,11 +7,13 @@
        eval
        lookup
        pdf
+       ;; pdf
 
        :completion
        (company +auto +childframe)
        ;; (ivy +childframe +icons +prescient)
        (vertico +icons)
+       (corfu +orderless +icons)
 
        :ui
        ;; vc-gutter
@@ -31,9 +33,9 @@
         +defaults)
        window-select
        :editor
-       (meow +qwerty)
        ;; (evil
        ;;  +everywhere)
+       (meow +qwerty)
        file-templates
        rotate-text
        snippets
@@ -49,6 +51,8 @@
 
        :os
        ;; macos
+       ;; (tty +osc)
+       tty
 
        :tools
        ;; editorconfig
@@ -62,13 +66,14 @@
        ;; tmux
        ;; password-store
        (lsp +eglot)
+       tree-sitter
 
        :lang
        ;; lsp
        data
        (python
         ;; +conda
-        +lsp +pyenv +pipenv +pyright)
+        +lsp +pyenv +pipenv +tree-sitter)
        ;; ess
        ;; (latex
        ;;  +latexmk
@@ -84,7 +89,7 @@
        emacs-lisp
        ;; javascript
        markdown
-       ;; sh
+       (sh +fish)
        (web +html)
        (go +lsp)
        lua
@@ -115,5 +120,5 @@
        :config
        ;; (default +evil +bindings)
        (default +bindings)
-       ;; literate
+       literate
        )

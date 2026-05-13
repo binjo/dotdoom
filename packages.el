@@ -30,6 +30,13 @@
 
 (package! org-modern)
 
+;; (package! meow-tree-sitter)
+(package! meow)
+
 (package! powershell-ts-mode
   :recipe (:host github
            :repo "dmille56/powershell-ts-mode"))
+
+(unpin! vertico)
+
+(package! affe)
