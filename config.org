@@ -359,12 +359,12 @@
 (use-package! yara-mode
   :defer t
   :load-path my-yara-repo
-  :mode "\\.yara"
+  :mode ("\\.yara" "\\.yar")
   :config
   (add-hook! 'yara-mode-hook
-    (defun +yara-enable-delete-trailing-whitespace-h ()
-      (add-hook 'before-save-hook #'delete-trailing-whitespace nil t))
-    #'yas-minor-mode-on)
+             #'yas-minor-mode-on
+             (defun +yara-disable-show-paren-mode-h ()
+               (show-paren-mode -1)))
   (cond
    ((modulep! :tools lsp +lsp)
     (with-eval-after-load 'lsp-mode
@@ -372,12 +372,12 @@
       (add-to-list 'lsp-language-id-configuration
                    '(yara-mode . "yara"))
       (lsp-register-client
-       (make-lsp-client :new-connection (lsp-stdio-connection '("uvx" "yls"))
+       (make-lsp-client :new-connection (lsp-stdio-connection '("yls"))
                         :activation-fn (lsp-activate-on "yara")
                         :server-id 'yls))))
    ((modulep! :tools lsp +eglot)
     (add-hook! 'yara-mode-hook #'eglot-ensure)
-    (set-eglot-client! 'yara-mode '("uvx" "yls")))))
+    (set-eglot-client! 'yara-mode '("yls")))))
 #+end_src
 
 ** PowerShell Mode

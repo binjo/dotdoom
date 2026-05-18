@@ -39,6 +39,7 @@
        file-templates
        rotate-text
        snippets
+       (whitespace +trim)
        :emacs
        vc
        dired
