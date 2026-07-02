@@ -295,6 +295,12 @@
 
 (advice-add #'company-ispell :around #'doom-shut-up-a)
 
+(use-package! eldoc-box
+  :hook (eldoc-mode . eldoc-box-hover-at-point-mode)
+  :config
+  (setq eldoc-box-max-pixel-width 600
+        eldoc-box-max-pixel-height 400))
+
 (cond
   (IS-WINDOWS (setq my-yara-repo "d:/Exclusive/repos/yara-mode"))
   ((or IS-MAC IS-LINUX) (setq my-yara-repo "~/repos/yara-mode")))
@@ -315,12 +321,12 @@
       (add-to-list 'lsp-language-id-configuration
                    '(yara-mode . "yara"))
       (lsp-register-client
-       (make-lsp-client :new-connection (lsp-stdio-connection '("yls"))
-                        :activation-fn (lsp-activate-on "yara")
-                        :server-id 'yls))))
+       (make-lsp-client :new-connection (lsp-stdio-connection '("yr-ls"))
+                        :activation-fn (lsp-activate-on-modes 'yara-mode)
+                        :server-id 'yara-x-ls))))
    ((modulep! :tools lsp +eglot)
     (add-hook! 'yara-mode-hook #'eglot-ensure)
-    (set-eglot-client! 'yara-mode '("yls")))))
+    (set-eglot-client! 'yara-mode '("yr-ls")))))
 
 (use-package! powershell-ts-mode
   :defer t
@@ -388,6 +394,7 @@
 
 (after! meow
   (setq meow-cursor-type-normal 'box)
+  (setq meow-cursor-type-beacon 'box)
   (setq blink-cursor-interval 0.3)
   (setq meow-use-clipboard t)
   (setq meow--delete-region-function 'kill-region)
@@ -395,9 +402,9 @@
   ;; Improve visibility for Tokyo Night theme
   (custom-set-faces!
     `(meow-face-selection :background ,(doom-color 'magenta) :foreground ,(doom-color 'base0))
-    `(meow-face-search :background ,(doom-color 'cyan) :foreground ,(doom-color 'base0))
-    `(meow-beacon-indicator :background ,(doom-color 'yellow) :foreground ,(doom-color 'base0) :weight bold)
-    `(meow-beacon :background ,(doom-color 'yellow) :foreground ,(doom-color 'base0) :weight bold))
+    `(meow-face-search :background ,(doom-color 'green) :foreground ,(doom-color 'base0))
+    `(meow-beacon-indicator :background ,(doom-color 'red) :foreground ,(doom-color 'base0) :weight bold)
+    `(meow-beacon :background ,(doom-color 'red) :foreground ,(doom-color 'base0) :weight bold))
 
   ;; (map! :leader
   ;;       :desc "Kill current buffer" "k" #'kill-current-buffer)

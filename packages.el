@@ -40,3 +40,5 @@
 (unpin! vertico)
 
 (package! affe)
+
+(package! eldoc-box)
